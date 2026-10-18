@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="tr">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#f3f1eb">
+	<meta name="robots" content="noindex,nofollow">
+	<title>Yönetim demosu — Moda Chicago</title>
+	<link rel="stylesheet" href="assets/moda-demo.css">
+	<link rel="stylesheet" href="assets/moda-admin.css">
+	<script src="assets/moda-catalog.js" defer></script>
+	<script src="assets/moda-site-config.js" defer></script>
+	<script src="assets/moda-demo-utils.js" defer></script>
+	<script src="assets/moda-admin.js" defer></script>
+</head>
+<body class="admin-body">
+	<a class="skip-link" href="#admin-main">İçeriğe geç</a>
+	<header class="admin-topbar">
+		<a class="brand" href="index.html" aria-label="Mağaza demosuna dön">
+			<span class="brand-name" data-site-brand-name>MODA</span>
+			<span class="brand-subtitle" data-site-brand-subtitle>CHICAGO</span>
+		</a>
+		<div class="admin-top-actions">
+			<span class="demo-role">Tarayıcı içi demo panel</span>
+			<a class="admin-store-link" href="index.html">Mağazayı görüntüle ↗</a>
+		</div>
+	</header>
+
+	<main class="admin-layout" id="admin-main">
+		<aside class="admin-sidebar" aria-label="Yönetim bölümleri">
+			<p class="eyebrow">Yönetim</p>
+			<a class="sidebar-link" href="#site-content"><span aria-hidden="true">✦</span> Site içeriği</a>
+			<a class="sidebar-link is-active" href="#urunler" aria-current="page"><span aria-hidden="true">▦</span> Ürün kataloğu</a>
+			<a class="sidebar-link" href="#urunler" data-unavailable="Sipariş ve müşteri yönetimi statik demoda kullanılamaz."><span aria-hidden="true">▤</span> Siparişler</a>
+			<a class="sidebar-link" href="#urunler" data-unavailable="Gerçek müşteri hesabı veya kişisel veri bu demoda saklanmaz."><span aria-hidden="true">♙</span> Müşteriler</a>
+			<a class="sidebar-link" href="#urunler" data-unavailable="Kupon hesaplaması demo mağazasında etkin değildir."><span aria-hidden="true">％</span> Kuponlar</a>
+			<div class="sidebar-note">Bu panel giriş sistemi kullanmaz. Herkes erişebilir; yalnızca örnek ürün verisini bu tarayıcıda değiştirir.</div>
+		</aside>
+
+		<div class="admin-content">
+			<div class="admin-demo-warning" role="status"><strong>Demo yönetim paneli</strong><span>Güvenli oturum, sunucu veritabanı, gerçek sipariş veya müşteri verisi yoktur. Değişiklikler yalnızca bu tarayıcıda saklanır.</span></div>
+			<section class="admin-welcome">
+				<div>
+					<p class="eyebrow" id="admin-site-brand">Moda Chicago / Mağaza</p>
+					<h1>Mağaza özeti</h1>
+					<p>Örnek ürün kataloğunu ve tarayıcıda saklanan demo stoklarını yönet.</p>
+				</div>
+				<button class="button button-dark" type="button" id="add-product">＋ <span>Demo ürün ekle</span></button>
+			</section>
+
+			<section class="stats-grid" aria-label="Demo mağaza istatistikleri">
+				<article class="stat-card"><span>Katalog ürünü</span><strong id="stat-products">0</strong><small>Örnek ürün kaydı</small></article>
+				<article class="stat-card"><span>Demo stok birimi</span><strong id="stat-stock">0</strong><small>Varyasyon bazında değil</small></article>
+				<article class="stat-card"><span>Stokta olmayan</span><strong id="stat-out-of-stock">0</strong><small>Demo ürün</small></article>
+				<article class="stat-card"><span>Demo sipariş</span><strong>0</strong><small>Gerçek sipariş alınmaz</small></article>
+			</section>
+
+			<section class="admin-panel site-content-panel" id="site-content" aria-labelledby="site-content-heading">
+				<div class="panel-heading"><div><p class="eyebrow">Mağaza deneyimi / İçerik ve tasarım</p><h2 id="site-content-heading">Siteyi özelleştir</h2></div></div>
+				<p class="site-content-intro">Burada kaydettiğin metin, renk ve görseller müşteri sayfasına uygulanır. İki sayfa da aynı tarayıcıda açılmalıdır.</p>
+				<form id="site-content-form">
+					<details class="site-editor-group" open>
+						<summary>Marka, duyuru ve menü</summary>
+						<div class="site-editor-grid">
+							<label>Logo üst satırı<input name="brandName" maxlength="24" required></label>
+							<label>Logo alt satırı<input name="brandSubtitle" maxlength="32" required></label>
+							<label>Tarayıcı sekmesi başlığı<input name="siteTitle" maxlength="80" required></label>
+							<label class="field-full">Arama motoru açıklaması<textarea name="siteDescription" maxlength="200" rows="2" required></textarea></label>
+							<label class="field-full">Üst duyuru bandı<textarea name="announcement" maxlength="180" rows="2" required></textarea></label>
+							<label>Menü: sezon<input name="navSeason" maxlength="30" required></label>
+							<label>Menü: koleksiyonlar<input name="navCategories" maxlength="30" required></label>
+							<label>Menü: hikâyemiz<input name="navStory" maxlength="30" required></label>
+							<label>Menü: favoriler<input name="navFavorites" maxlength="36" required></label>
+						</div>
+					</details>
+					<details class="site-editor-group" open>
+						<summary>Ana sayfa / Hero alanı</summary>
+						<div class="site-editor-grid">
+							<label>Üst etiket<input name="heroEyebrow" maxlength="50" required></label>
+							<label>Küçük alt slogan<input name="heroFootnote" maxlength="60" required></label>
+							<label>Başlık satırı 1<input name="heroTitleTop" maxlength="50" required></label>
+							<label>Başlık satırı 2<input name="heroTitleBottom" maxlength="50" required></label>
+							<label class="field-full">Açıklama<textarea name="heroDescription" maxlength="240" rows="2" required></textarea></label>
+							<label>Düğme metni<input name="heroCta" maxlength="40" required></label>
+							<label>Düğme hedefi<select name="heroCtaTarget"><option value="#koleksiyon">Ürün koleksiyonu</option><option value="#kategoriler">Kategoriler</option><option value="#hikaye">Hikâyemiz</option><option value="#demo-bilgi">Mağaza bilgisi</option></select></label>
+							<label>Görsel üzeri sol metin<input name="heroCaptionLeft" maxlength="24" required></label>
+							<label>Görsel üzeri sağ metin<input name="heroCaptionRight" maxlength="24" required></label>
+							<div class="field-full site-image-field"><label for="site-hero-image">Hero fotoğrafı (isteğe bağlı)</label><input id="site-hero-image" type="file" data-site-image="heroImage" accept="image/jpeg,image/png,image/webp"><div class="site-image-preview" data-site-preview="heroImage"></div></div>
+						</div>
+					</details>
+					<details class="site-editor-group">
+						<summary>Kategoriler ve ürün koleksiyonu</summary>
+						<div class="site-editor-grid">
+							<label>Kategori üst etiketi<input name="categoryEyebrow" maxlength="50" required></label>
+							<label>Kategori başlığı<input name="categoryTitle" maxlength="60" required></label>
+							<label>Kategori bağlantı metni<input name="categoryLink" maxlength="36" required></label>
+							<label>Kategori 1 adı<input name="categoryName0" maxlength="30" required></label>
+							<label>Kategori 2 adı<input name="categoryName1" maxlength="30" required></label>
+							<label>Kategori 3 adı<input name="categoryName2" maxlength="30" required></label>
+							<label>Kategori 4 adı<input name="categoryName3" maxlength="30" required></label>
+							<label>Ürün bölümü üst etiketi<input name="collectionEyebrow" maxlength="50" required></label>
+							<label>Ürün bölümü başlığı<input name="collectionTitle" maxlength="60" required></label>
+							<label class="field-full">Ürün bölümü açıklaması<textarea name="collectionNote" maxlength="180" rows="2" required></textarea></label>
+							<div class="field-full site-category-images">
+								<p>Kategori görselleri (isteğe bağlı)</p>
+								<div class="site-editor-grid">
+									<div class="site-image-field"><label for="site-category-image-0">Kategori 1</label><input id="site-category-image-0" type="file" data-site-image="categoryImage0" accept="image/jpeg,image/png,image/webp"><div class="site-image-preview" data-site-preview="categoryImage0"></div></div>
+									<div class="site-image-field"><label for="site-category-image-1">Kategori 2</label><input id="site-category-image-1" type="file" data-site-image="categoryImage1" accept="image/jpeg,image/png,image/webp"><div class="site-image-preview" data-site-preview="categoryImage1"></div></div>
+									<div class="site-image-field"><label for="site-category-image-2">Kategori 3</label><input id="site-category-image-2" type="file" data-site-image="categoryImage2" accept="image/jpeg,image/png,image/webp"><div class="site-image-preview" data-site-preview="categoryImage2"></div></div>
+									<div class="site-image-field"><label for="site-category-image-3">Kategori 4</label><input id="site-category-image-3" type="file" data-site-image="categoryImage3" accept="image/jpeg,image/png,image/webp"><div class="site-image-preview" data-site-preview="categoryImage3"></div></div>
+								</div>
+							</div>
+						</div>
+					</details>
+					<details class="site-editor-group">
+						<summary>Marka hikâyesi ve mağaza bilgi alanı</summary>
+						<div class="site-editor-grid">
+							<label>Hikâye üst etiketi<input name="storyEyebrow" maxlength="50" required></label>
+							<label>Hikâye bağlantı metni<input name="storyLink" maxlength="36" required></label>
+							<label>Hikâye başlık satırı 1<input name="storyTitleTop" maxlength="50" required></label>
+							<label>Hikâye başlık satırı 2<input name="storyTitleBottom" maxlength="50" required></label>
+							<label class="field-full">Hikâye metni<textarea name="storyBody" maxlength="400" rows="3" required></textarea></label>
+							<div class="field-full site-image-field"><label for="site-story-image">Hikâye fotoğrafı (isteğe bağlı)</label><input id="site-story-image" type="file" data-site-image="storyImage" accept="image/jpeg,image/png,image/webp"><div class="site-image-preview" data-site-preview="storyImage"></div></div>
+							<label>Bilgi alanı üst etiketi<input name="infoEyebrow" maxlength="50" required></label>
+							<label>Bilgi alanı düğme metni<input name="infoLink" maxlength="36" required></label>
+							<label>Bilgi başlık satırı 1<input name="infoTitleTop" maxlength="60" required></label>
+							<label>Bilgi başlık satırı 2<input name="infoTitleBottom" maxlength="60" required></label>
+							<label class="field-full">Bilgi alanı metni<textarea name="infoBody" maxlength="240" rows="2" required></textarea></label>
+						</div>
+					</details>
+					<details class="site-editor-group">
+						<summary>Footer ve marka renkleri</summary>
+						<div class="site-editor-grid">
+							<label class="field-full">Footer marka açıklaması<textarea name="footerDescription" maxlength="160" rows="2" required></textarea></label>
+							<label>Footer: koleksiyon bağlantısı<input name="footerCollection" maxlength="30" required></label>
+							<label>Footer: bilgi bağlantısı<input name="footerInfo" maxlength="30" required></label>
+							<label>Footer: yönetim giriş bağlantısı<input name="footerAdmin" maxlength="40" required></label>
+							<label>Footer: başa dön bağlantısı<input name="footerTop" maxlength="30" required></label>
+							<label>Chicago mavisi<input name="blue" type="color" required></label>
+							<label>Chicago kırmızısı<input name="red" type="color" required></label>
+						</div>
+					</details>
+					<details class="site-editor-group">
+						<summary>Ana sayfa bölümlerinin görünürlüğü</summary>
+						<div class="site-editor-grid site-visibility-grid">
+							<label><input name="showCategories" type="checkbox"> Kategori vitrinini göster</label>
+							<label><input name="showStory" type="checkbox"> Marka hikâyesini göster</label>
+							<label><input name="showInfo" type="checkbox"> Mağaza bilgi alanını göster</label>
+						</div>
+					</details>
+					<p class="form-error" id="site-content-error" role="alert" hidden></p>
+					<div class="site-content-actions"><button class="button button-preview" id="preview-site-content" type="button">Kaydetmeden önce önizle</button><button class="button button-dark" type="submit">Site değişikliklerini kaydet</button><button class="row-action" id="reset-site-content" type="button">Varsayılan site içeriğini geri yükle</button><span id="site-content-status" role="status" aria-live="polite"></span></div>
+				</form>
+			</section>
+			<dialog class="site-preview-dialog" id="site-preview-dialog" aria-labelledby="site-preview-title">
+				<div class="site-preview-toolbar">
+					<div><strong id="site-preview-title">Mağaza taslak önizlemesi</strong><span>Değişiklikler henüz kaydedilmedi.</span></div>
+					<button class="button button-dark" id="close-site-preview" type="button">Önizlemeyi kapat</button>
+				</div>
+				<iframe id="site-preview-frame" title="Kaydedilmemiş mağaza tasarımı önizlemesi" src="index.html?draft-preview=1"></iframe>
+			</dialog>
+
+			<section class="admin-panel" id="urunler" aria-labelledby="products-heading">
+				<div class="panel-heading">
+					<div><p class="eyebrow">Katalog / Envanter</p><h2 id="products-heading">Ürünler</h2></div>
+					<div class="admin-table-actions">
+						<button class="row-action" id="reset-catalog" type="button">Örnek kataloğu sıfırla</button>
+						<label class="admin-search"><span class="sr-only">Ürünlerde ara</span><span aria-hidden="true">⌕</span><input id="admin-search" type="search" placeholder="Ürün ara"></label>
+					</div>
+				</div>
+				<div class="table-wrap">
+					<table class="product-table">
+						<thead><tr><th scope="col">Ürün</th><th scope="col">Kategori</th><th scope="col">Fiyat</th><th scope="col">Demo stok</th><th scope="col">Durum</th><th scope="col">İşlemler</th></tr></thead>
+						<tbody id="admin-product-rows"></tbody>
+					</table>
+				</div>
+				<p class="table-empty" id="table-empty" hidden>Aramana uygun demo ürün bulunamadı.</p>
+			</section>
+
+			<section class="admin-panel limitations-panel">
+				<div class="panel-heading"><div><p class="eyebrow">Gerçek mağaza için</p><h2>Bu demoda bulunmayanlar</h2></div></div>
+				<div class="limitations-grid">
+					<p><strong>Ürün fotoğrafları</strong><span>Eklenen görseller yalnızca bu tarayıcıda saklanır.</span></p>
+					<p><strong>Varyasyon stoğu</strong><span>Stok sayısı ürün düzeyi örnektir; beden bazında stok kaydı değildir.</span></p>
+					<p><strong>Sipariş ve müşteri</strong><span>Gerçek sipariş, kullanıcı veya kişisel veri oluşturulmaz.</span></p>
+					<p><strong>Ödeme, kupon, kargo</strong><span>Sunucu ve sağlayıcı entegrasyonu olmadığı için etkin değildir.</span></p>
+				</div>
+			</section>
+			<footer class="admin-footer"><span>Moda Chicago · Yönetim arayüzü demosu</span><a href="index.html">Mağazaya dön ↗</a></footer>
+		</div>
+	</main>
+
+	<dialog class="admin-form-dialog" id="product-dialog" aria-labelledby="form-title">
+		<form id="product-form">
+			<div class="form-dialog-heading"><div><p class="eyebrow">Demo katalog kaydı</p><h2 id="form-title">Ürün ekle</h2></div><button class="icon-button" type="button" data-close-form aria-label="Formu kapat">×</button></div>
+			<input id="product-id" name="id" type="hidden">
+			<div class="form-grid">
+				<label class="field-full">Ürün adı<input id="product-name" name="name" type="text" maxlength="90" required></label>
+				<input id="product-style-id" name="styleId" type="hidden">
+				<label>Kategori<select id="product-category" name="category" required><option>Üst giyim</option><option>Alt giyim</option><option>Dış giyim</option><option>Aksesuar</option></select></label>
+				<label>Demo fiyat (₺)<input id="product-price" name="price" type="number" min="1" step="1" required></label>
+				<label>İndirim öncesi fiyat (isteğe bağlı)<input id="product-old-price" name="oldPrice" type="number" min="1" step="1"></label>
+				<label>Demo stok adedi<input id="product-stock" name="stock" type="number" min="0" step="1" required></label>
+				<label>Renk adı<input id="product-color" name="color" type="text" maxlength="40" required></label>
+				<label>Renk kodu<input id="product-color-hex" name="colorHex" type="color" value="#c7b9a5" required></label>
+				<label>Arka plan rengi<input id="product-bg" name="bg" type="color" value="#ded6c9" required></label>
+				<label class="field-full">Bedenler (virgülle ayır)<input id="product-sizes" name="sizes" type="text" placeholder="XS, S, M, L" required><small>Beden seçenekleri ortaktır; demo stok her renk varyantı için ayrı tutulur, beden bazında takip edilmez.</small></label>
+				<label class="field-full">Etiket (isteğe bağlı)<input id="product-badge" name="badge" type="text" maxlength="24" placeholder="YENİ"></label>
+				<div class="field-full image-upload-field">
+					<label for="product-images">Ürün fotoğrafları (en fazla 6)</label>
+					<input id="product-images" name="images" type="file" accept="image/jpeg,image/png,image/webp" multiple>
+					<small>JPG, PNG veya WebP · her dosya en fazla 8 MB. Farklı açılardan fotoğraf ekleyebilirsin; görseller küçültülüp bu tarayıcıda saklanır.</small>
+					<div class="image-gallery-preview" id="image-gallery-preview" aria-live="polite"></div>
+				</div>
+			</div>
+			<p class="form-error" id="form-error" role="alert" hidden></p>
+			<div class="form-actions"><button class="button button-light" type="button" data-close-form>Vazgeç</button><button class="button button-dark" type="submit">Demo ürünü kaydet</button></div>
+		</form>
+	</dialog>
+	<dialog class="message-dialog" id="admin-message" aria-labelledby="admin-message-title">
+		<button class="icon-button dialog-close message-close" type="button" data-close-message aria-label="Bilgiyi kapat">×</button>
+		<p class="eyebrow">Yönetim demosu</p><h2 id="admin-message-title">Bilgi</h2><p id="admin-message-copy"></p>
+		<button class="button button-dark" type="button" data-close-message>Anladım</button>
+	</dialog>
+	<div class="sr-only" id="admin-announcer" role="status" aria-live="polite"></div>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="tr">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#f7f5f0">
+	<meta name="description" content="Moda Chicago demo mağazası — zamansız parçalar, modern bir stil.">
+	<title>Moda Chicago — Zamansız parçalar</title>
+	<link rel="stylesheet" href="assets/moda-demo.css">
+	<script src="assets/moda-catalog.js" defer></script>
+	<script src="assets/moda-site-config.js" defer></script>
+	<script src="assets/moda-demo-utils.js" defer></script>
+	<script src="assets/moda-demo.js" defer></script>
+</head>
+<body>
+	<a class="skip-link" href="#main">İçeriğe geç</a>
+	<div class="demo-notice" id="site-announcement" role="status">
+		Bu bir demo mağazadır. Gerçek sipariş, ödeme, stok veya üyelik işlemi yapılmaz.
+	</div>
+	<div class="draft-preview-notice" id="draft-preview-notice" hidden>Yönetim paneli taslak önizlemesi · Bu değişiklikler henüz kaydedilmedi</div>
+
+	<header class="site-header">
+		<div class="header-main">
+			<button class="icon-button mobile-menu-button" id="mobile-menu-button" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Menüyü aç">
+				<span class="menu-icon" aria-hidden="true"></span>
+			</button>
+			<a class="brand" href="#top" aria-label="Moda Chicago ana sayfa">
+				<span class="brand-name" data-site-brand-name>MODA</span>
+				<span class="brand-subtitle" data-site-brand-subtitle>CHICAGO</span>
+			</a>
+			<nav class="primary-nav" id="primary-nav" aria-label="Ana menü">
+				<a href="#koleksiyon" data-site-nav="season">Yeni sezon</a>
+				<a href="#kategoriler" id="site-nav-categories" data-site-nav="categories">Koleksiyonlar</a>
+				<a href="#hikaye" id="site-nav-story" data-site-nav="story">Hikâyemiz</a>
+				<a href="#koleksiyon" id="mobile-favorites-link" data-site-nav="favorites">Favori demo ürünler</a>
+			</nav>
+			<div class="header-actions">
+				<label class="search-box">
+					<span class="sr-only">Ürün ara</span>
+					<button class="search-trigger" type="button" aria-label="Ürün arama alanını aç">
+						<svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 5 5"></path></svg>
+					</button>
+					<input id="header-search" type="search" placeholder="Ürün ara" autocomplete="off">
+				</label>
+				<a class="account-link" href="#demo-bilgi">Hesabım</a>
+				<button class="icon-button favorite-shortcut" id="favorite-shortcut" type="button" aria-label="Favori ürünlere git">
+					<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20.8 8.8c0 5.1-8.8 11-8.8 11s-8.8-5.9-8.8-11A4.8 4.8 0 0 1 12 6.3a4.8 4.8 0 0 1 8.8 2.5Z"></path></svg>
+					<span class="favorite-count" id="favorite-count" aria-label="Favori sayısı">0</span>
+				</button>
+				<button class="bag-button" id="open-cart" type="button" aria-haspopup="dialog" aria-controls="cart-dialog">
+					<span>Çanta</span>
+					<span class="bag-count" id="cart-count" aria-label="Sepetteki ürün sayısı">0</span>
+				</button>
+			</div>
+		</div>
+		<div class="mobile-nav-backdrop" id="mobile-nav-backdrop" hidden></div>
+	</header>
+
+	<main id="main">
+		<section class="hero" id="top" aria-labelledby="hero-title">
+			<div class="hero-copy">
+				<p class="eyebrow" id="site-hero-eyebrow">2026 / Yeni sezon</p>
+				<h1 id="hero-title"><span id="site-hero-title-top">Az ama</span><br><em id="site-hero-title-bottom">özgün.</em></h1>
+				<p class="hero-description" id="site-hero-description">Her gün yeniden giymek isteyeceğin, özenle seçilmiş zamansız parçalar.</p>
+				<a class="button button-dark" id="site-hero-cta" href="#koleksiyon"><span id="site-hero-cta-text">Koleksiyonu keşfet</span><span aria-hidden="true">↗</span></a>
+				<p class="hero-footnote" id="site-hero-footnote">Daha az, daha iyi.</p>
+			</div>
+			<div class="hero-art" role="img" aria-label="Bej ve siyah tonlarda soyut moda illüstrasyonu">
+				<div class="hero-sun"></div>
+				<div class="hero-figure">
+					<span class="figure-head"></span>
+					<span class="figure-body"></span>
+					<span class="figure-leg figure-leg-one"></span>
+					<span class="figure-leg figure-leg-two"></span>
+				</div>
+				<div class="hero-art-caption"><span id="site-hero-caption-left">STUDIO</span><span id="site-hero-caption-right">01 / 26</span></div>
+			</div>
+		</section>
+
+		<section class="category-section section-shell" id="kategoriler" aria-labelledby="category-title">
+			<div class="section-heading">
+				<div>
+					<p class="eyebrow" id="site-category-eyebrow">Kendine göre keşfet</p>
+					<h2 id="category-title">Gardırobun özü</h2>
+				</div>
+				<a class="text-link" id="site-category-link" href="#koleksiyon"><span id="site-category-link-text">Tüm ürünler</span><span aria-hidden="true">↗</span></a>
+			</div>
+			<div class="category-grid">
+				<a class="category-tile category-tile-one" href="#koleksiyon" data-category-link="Üst giyim"><span>01</span><strong data-site-category="0">Üst giyim</strong><i aria-hidden="true">↗</i></a>
+				<a class="category-tile category-tile-two" href="#koleksiyon" data-category-link="Alt giyim"><span>02</span><strong data-site-category="1">Alt giyim</strong><i aria-hidden="true">↗</i></a>
+				<a class="category-tile category-tile-three" href="#koleksiyon" data-category-link="Dış giyim"><span>03</span><strong data-site-category="2">Dış giyim</strong><i aria-hidden="true">↗</i></a>
+				<a class="category-tile category-tile-four" href="#koleksiyon" data-category-link="Aksesuar"><span>04</span><strong data-site-category="3">Aksesuar</strong><i aria-hidden="true">↗</i></a>
+			</div>
+		</section>
+
+		<section class="collection-section section-shell" id="koleksiyon" aria-labelledby="collection-title">
+			<div class="section-heading collection-heading">
+				<div>
+					<p class="eyebrow" id="site-collection-eyebrow">Özenle seçildi</p>
+					<h2 id="collection-title">Sezonun favorileri</h2>
+				</div>
+				<p class="section-note" id="site-collection-note">İyi hissettiren, uzun süre seninle kalan parçalar.</p>
+			</div>
+			<div class="catalog-toolbar">
+				<div class="filter-controls">
+					<label class="select-field">
+						<span class="sr-only">Kategoriye göre filtrele</span>
+						<select id="category-filter">
+							<option value="">Tüm kategoriler</option>
+							<option value="Üst giyim" data-site-category-option>Üst giyim</option>
+							<option value="Alt giyim" data-site-category-option>Alt giyim</option>
+							<option value="Dış giyim" data-site-category-option>Dış giyim</option>
+							<option value="Aksesuar" data-site-category-option>Aksesuar</option>
+						</select>
+					</label>
+					<label class="select-field">
+						<span class="sr-only">Fiyata göre filtrele</span>
+						<select id="price-filter">
+							<option value="">Tüm fiyatlar</option>
+							<option value="0-1000">₺1.000 altı</option>
+							<option value="1000-2500">₺1.000–₺2.500</option>
+							<option value="2500-99999">₺2.500 üzeri</option>
+						</select>
+					</label>
+					<label class="stock-filter"><input id="stock-filter" type="checkbox"> Demo stoğunda</label>
+				</div>
+				<label class="select-field sort-field">
+					<span class="sr-only">Ürünleri sırala</span>
+					<select id="sort-filter">
+						<option value="featured">Öne çıkanlar</option>
+						<option value="price-asc">Fiyat: artan</option>
+						<option value="price-desc">Fiyat: azalan</option>
+						<option value="popular">Popülerlik</option>
+						<option value="newest">En yeni</option>
+					</select>
+				</label>
+			</div>
+			<p class="result-count" id="result-count" aria-live="polite"></p>
+			<div class="product-grid" id="product-grid"></div>
+			<p class="empty-state" id="empty-state" hidden>Bu seçimle eşleşen demo ürün yok. Filtreleri değiştirip tekrar dene.</p>
+		</section>
+
+		<section class="story-section" id="hikaye" aria-labelledby="story-title">
+			<div class="story-art" aria-hidden="true"><span>CHICAGO</span><i></i></div>
+			<div class="story-copy">
+				<p class="eyebrow" id="site-story-eyebrow">Moda Chicago yaklaşımı</p>
+				<h2 id="story-title"><span id="site-story-title-top">Seçerek yaşa.</span><br><em id="site-story-title-bottom">Uzun süre giy.</em></h2>
+				<p id="site-story-body">Bu örnek mağaza deneyimi, koleksiyonu ve alışveriş arayüzünü göstermek için hazırlandı. Ürün ve stok bilgileri demo verisidir.</p>
+				<a class="text-link" id="site-story-link" href="#koleksiyon"><span id="site-story-link-text">Parçaları incele</span><span aria-hidden="true">↗</span></a>
+			</div>
+		</section>
+
+		<section class="newsletter-section section-shell" id="demo-bilgi">
+			<p class="eyebrow" id="site-info-eyebrow">Önizleme mağazası</p>
+			<h2><span id="site-info-title-top">Gerçek alışveriş için</span><br><em id="site-info-title-bottom">mağaza kurulumu gerekir.</em></h2>
+			<p id="site-info-body">Hesap, bülten, stok, sipariş, kargo ve ödeme sistemleri bu statik demoda bağlı değildir.</p>
+			<a class="button button-light" id="site-info-link" href="#koleksiyon"><span id="site-info-link-text">Demo ürünlere dön</span><span aria-hidden="true">↑</span></a>
+		</section>
+	</main>
+
+	<footer class="site-footer">
+		<div class="footer-main">
+			<a class="brand brand-footer" href="#top" aria-label="Moda Chicago ana sayfa"><span class="brand-name" data-site-brand-name>MODA</span><span class="brand-subtitle" data-site-brand-subtitle>CHICAGO</span></a>
+			<p id="site-footer-description">Zamansız parçalar.<br>Modern bir gardırop.</p>
+			<div class="footer-links"><a href="#koleksiyon" data-site-footer-link="footerCollection">Koleksiyon</a><a href="#demo-bilgi" id="site-footer-info" data-site-footer-link="footerInfo">Demo bilgisi</a><a class="admin-entry-link" href="admin.html"><span data-site-footer-link="footerAdmin">Yönetim paneline giriş</span><span aria-hidden="true">↗</span></a><a href="#top" data-site-footer-link="footerTop">Başa dön ↑</a></div>
+		</div>
+		<div class="footer-bottom"><span>© 2026 Moda Chicago · Demo arayüz</span><span>Gerçek sipariş veya ödeme alınmaz.</span></div>
+	</footer>
+
+	<dialog class="cart-dialog" id="cart-dialog" aria-labelledby="cart-title">
+		<div class="dialog-header"><div><p class="eyebrow">Seçtiklerin</p><h2 id="cart-title">Demo çantası</h2></div><button class="icon-button dialog-close" type="button" data-close-dialog aria-label="Sepeti kapat">×</button></div>
+		<p class="dialog-demo-note">Sepet yalnızca bu tarayıcıda demo amaçlı saklanır.</p>
+		<div class="cart-items" id="cart-items"></div>
+		<div class="cart-empty" id="cart-empty"><span aria-hidden="true">♡</span><p>Çantan henüz boş.</p><a class="text-link" href="#koleksiyon" data-close-dialog>Sezonun favorilerini keşfet ↗</a></div>
+		<div class="cart-summary" id="cart-summary" hidden>
+			<div><span>Demo ara toplam</span><strong id="cart-subtotal">₺0</strong></div>
+			<p>Kargo, vergi ve ödeme bu demoda hesaplanmaz.</p>
+			<button class="button button-dark checkout-button" id="demo-checkout" type="button">Demo ödemeye devam et <span aria-hidden="true">→</span></button>
+		</div>
+	</dialog>
+
+	<dialog class="message-dialog" id="message-dialog" aria-labelledby="message-title">
+		<button class="icon-button dialog-close message-close" type="button" data-close-dialog aria-label="Bilgiyi kapat">×</button>
+		<p class="eyebrow">Önizleme mağazası</p>
+		<h2 id="message-title">Bu yalnızca bir demodur.</h2>
+		<p id="message-copy">Gerçek sipariş veya ödeme alınmaz.</p>
+		<button class="button button-dark" type="button" data-close-dialog>Anladım</button>
+	</dialog>
+	<dialog class="product-details-dialog" id="product-details-dialog" aria-labelledby="product-details-title">
+		<button class="icon-button product-details-dismiss" type="button" data-close-product-details aria-label="Ürün bilgilerini kapat">×</button>
+		<div class="product-details-layout" id="product-details-content"></div>
+	</dialog>
+	<div class="sr-only" id="announcer" role="status" aria-live="polite"></div>
+</body>
+</html>
