@@ -30,8 +30,13 @@ WordPress yönetiminde **WooCommerce > Ayarlar**:
    - Bekleyen siparişler için stok tutma süresini operasyon ekibiyle belirleyin.
 3. **Hesaplar ve gizlilik**
    - Misafir ödeme seçeneğini etkinleştirin.
-   - İsteğe bağlı hesap oluşturmayı ve sipariş sonrası parola oluşturma e-postasını
-     işletme akışına göre açın.
+   - İsteğe bağlı checkout hesabı, Hesabım sayfası kaydı ve parola oluşturma
+     e-postasını etkin tutun. Bu mağazada bu seçenekler açıktır; müşteri ödeme
+     sırasında kayıt olabilir veya bu seçeneği kullanmadan misafir sipariş
+     verebilir.
+   - Üyeler sipariş durumunu **Hesabım > Siparişler** bölümünde izler. Misafir
+     siparişleri [Sipariş Takibi](https://www.modamchicago.com/siparis-takibi/)
+     sayfasında sipariş numarası ve fatura e-posta adresiyle sorgulanır.
 4. **Gönderim**
    - Türkiye, uluslararası bölgeler ve varsa yerel teslimat için ayrı gönderim
      bölgeleri oluşturun.
@@ -52,6 +57,22 @@ altında atanmış, erişilebilir ve doğru sayfa içeriklerine sahip olduğunu
 doğrulayın. Checkout Block kullanılıyorsa seçilen ağ geçidinin blok ödeme
 uyumluluğunu ayrıca teyit edin; gerekirse uyumlu klasik checkout sayfasında
 staging testi yapın.
+
+### Müşteri kaydı ve sipariş takibi
+
+- Yeni müşteri üst menüdeki kişi simgesinden **Hesabım** sayfasına girer; kayıt
+  formunda e-posta ve parola kullanır. Checkout sırasında da hesap açma seçeneği
+  gösterilir. Hesap açmadan devam etmek isteyenler misafir checkout'u kullanır.
+- Üye müşteriler, giriş yaptıktan sonra **Hesabım > Siparişler** bölümünde
+  sipariş geçmişini ve sipariş ayrıntı/durumunu görür.
+- Misafirler `/siparis-takibi/` adresinde sipariş numarası ve siparişin fatura
+  e-posta adresini girer. Sipariş numarası onay e-postasında yer alır. Yalnızca
+  sipariş numarasıyla sorgulama yapılmaz; e-posta eşleşmesi başkasının sipariş
+  ayrıntılarını ifşa etmemek için gerekir.
+- Yönetici siparişleri **WooCommerce > Siparişler**, müşteri kayıtlarını
+  **WooCommerce > Müşteriler** ekranında inceler. Erişim sadece gerekli yönetici
+  ve mağaza yöneticisi rollerine verilmelidir; müşteri verisini statik demo
+  panelinde veya herkese açık sayfalarda göstermeyin.
 
 ## 2. Sunucu tarafı tutarlılık kuralları
 

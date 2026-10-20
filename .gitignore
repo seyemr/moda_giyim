@@ -1,0 +1,15 @@
+/dist/
+/wp-admin/
+/wp-includes/
+/wp-content/cache/
+/wp-content/uploads/
+/wp-content/plugins/akismet/
+/wp-content/themes/twentytwenty*/
+/wp-config.php
+/wp-config-*.php
+/.htaccess
+/index.php
+/license.txt
+/readme.html
+/wp-*.php
+/xmlrpc.php

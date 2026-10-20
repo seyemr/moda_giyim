@@ -90,7 +90,7 @@
 .site-content-intro { margin: 0; padding: 0 22px 15px; color: var(--muted); font-size: 11px; line-height: 1.65; }
 .site-editor-group { border-top: 1px solid #e6ebec; }
 .site-editor-group > summary { padding: 15px 22px; color: var(--ink); cursor: pointer; font-size: 12px; font-weight: 700; list-style-position: inside; }
-.site-editor-group[open] > summary { color: #14789f; }
+.site-editor-group[open] > summary { color: var(--chicago-red); }
 .site-editor-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 13px; padding: 4px 22px 20px; }
 .site-editor-grid label { display: flex; flex-direction: column; gap: 6px; color: #4f5e66; font-size: 10px; }
 .site-editor-grid input:not([type="file"]), .site-editor-grid select, .site-editor-grid textarea { width: 100%; min-height: 39px; border: 1px solid #d6dfe2; border-radius: 0; padding: 9px 10px; background: #fff; font: inherit; font-size: 12px; }
@@ -178,12 +178,12 @@
 }
 
 /* A calmer, more legible control room with clear surfaces and actions. */
-.admin-body { background: radial-gradient(ellipse at 95% 2%,rgba(74,168,200,.09),transparent 32%),#edf2f3; }
+.admin-body { background: radial-gradient(ellipse at 95% 2%,rgba(206,17,65,.08),transparent 32%),#f3eff0; }
 .admin-topbar { box-shadow: 0 8px 25px rgba(16,24,32,.055); }
 .admin-layout { max-width: 1680px; margin: 0 auto; }
 .admin-sidebar { background: rgba(248,251,251,.82); }
 .sidebar-link { min-height: 44px; border-radius: 8px; }
-.sidebar-link:hover, .sidebar-link.is-active { border-radius: 8px; box-shadow: inset 3px 0 var(--chicago-blue); background: #e3f0f3; }
+.sidebar-link:hover, .sidebar-link.is-active { border-radius: 8px; box-shadow: inset 3px 0 var(--chicago-red); background: #f8eaee; }
 .admin-demo-warning { border-radius: 11px; box-shadow: 0 5px 18px rgba(115,52,60,.05); }
 .admin-welcome { padding-top: 39px; }
 .admin-welcome h1 { font-size: clamp(34px,4vw,48px); }
@@ -202,7 +202,7 @@
 .row-action { transition: color .16s ease,border-color .16s ease; }
 .site-editor-group > summary { padding-top: 17px; padding-bottom: 17px; }
 .site-editor-grid input:not([type="file"]), .site-editor-grid select, .site-editor-grid textarea { border-radius: 7px; }
-.site-editor-grid input:focus, .site-editor-grid select:focus, .site-editor-grid textarea:focus { border-color: var(--chicago-blue); box-shadow: 0 0 0 3px rgba(74,168,200,.13); outline: 0; }
+.site-editor-grid input:focus, .site-editor-grid select:focus, .site-editor-grid textarea:focus { border-color: var(--chicago-red); box-shadow: 0 0 0 3px rgba(206,17,65,.13); outline: 0; }
 .site-image-preview img { border-radius: 8px; }
 .site-content-actions { position: sticky; z-index: 5; bottom: 0; border-top: 1px solid #e2e8ea; background: rgba(255,255,255,.96); backdrop-filter: blur(12px); }
 .admin-form-dialog, #admin-message { border-radius: 14px; }
@@ -230,7 +230,7 @@
 .admin-topbar .brand-name { font-weight: 800; letter-spacing: .17em; }
 .admin-topbar .brand-subtitle { color: #278bad; font-weight: 700; letter-spacing: .38em; }
 .admin-sidebar { background: #f5f7f6; }
-.admin-sidebar > .eyebrow, .panel-heading .eyebrow, .admin-welcome .eyebrow { color: #14789f; font-weight: 700; }
+.admin-sidebar > .eyebrow, .panel-heading .eyebrow, .admin-welcome .eyebrow { color: var(--chicago-red); font-weight: 700; }
 .sidebar-link { border-radius: 2px; }
 .sidebar-link:hover, .sidebar-link.is-active { box-shadow: inset 3px 0 #4aa8c8; background: #e3edf0; }
 .admin-content { max-width: 1360px; }

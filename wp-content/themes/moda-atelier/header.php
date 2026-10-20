@@ -16,13 +16,19 @@
 <?php
 $account_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : '';
 $cart_url    = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'cart' ) : '';
+$announcement      = get_theme_mod( 'moda_atelier_announcement', __( 'Yeni sezon yayında', 'moda-atelier' ) );
+$announcement_url  = get_theme_mod( 'moda_atelier_announcement_url', home_url( '/#campaigns' ) );
 ?>
 <a class="ma-skip-link" href="#main-content"><?php esc_html_e( 'İçeriğe geç', 'moda-atelier' ); ?></a>
+<?php if ( get_theme_mod( 'moda_atelier_show_announcement', true ) ) : ?>
 <div class="ma-announcement">
-	<span><?php esc_html_e( 'Yeni sezon yayında', 'moda-atelier' ); ?></span>
-	<span aria-hidden="true">·</span>
-	<a href="<?php echo esc_url( home_url( '/#campaigns' ) ); ?>"><?php esc_html_e( 'Koleksiyonu keşfet', 'moda-atelier' ); ?></a>
+	<span><?php echo esc_html( $announcement ); ?></span>
+	<?php if ( $announcement_url ) : ?>
+		<span aria-hidden="true">·</span>
+		<a href="<?php echo esc_url( $announcement_url ); ?>"><?php esc_html_e( 'Keşfet', 'moda-atelier' ); ?></a>
+	<?php endif; ?>
 </div>
+<?php endif; ?>
 <header class="ma-site-header">
 	<div class="ma-container ma-header-inner">
 		<button class="ma-menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation">
@@ -66,14 +72,14 @@ $cart_url    = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalin
 					<span class="ma-favorite-count" aria-live="polite">0</span>
 				</a>
 				<?php if ( $account_url ) : ?>
-					<a class="ma-icon-button ma-account-link" href="<?php echo esc_url( $account_url ); ?>" aria-label="<?php esc_attr_e( 'Hesabım', 'moda-atelier' ); ?>">
+					<a class="ma-icon-button ma-account-link" href="<?php echo esc_url( $account_url ); ?>" aria-label="<?php echo esc_attr( is_user_logged_in() ? __( 'Hesabım', 'moda-atelier' ) : __( 'Müşteri girişi ve kayıt', 'moda-atelier' ) ); ?>" title="<?php echo esc_attr( is_user_logged_in() ? __( 'Hesabım', 'moda-atelier' ) : __( 'Müşteri girişi ve kayıt', 'moda-atelier' ) ); ?>">
 						<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c.5-4 3.1-6.2 7.5-6.2s7 2.2 7.5 6.2"/></svg>
 					</a>
 				<?php endif; ?>
 				<?php if ( $cart_url ) : ?>
 					<a class="ma-icon-button ma-cart-link" href="<?php echo esc_url( $cart_url ); ?>" aria-label="<?php esc_attr_e( 'Sepet', 'moda-atelier' ); ?>">
 						<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3.5 4.5h2l2.1 11.2h10.7l2-8.1H6.2"/><circle cx="9.2" cy="19.2" r="1.1"/><circle cx="17.2" cy="19.2" r="1.1"/></svg>
-						<span class="ma-cart-count"><?php echo esc_html( WC()->cart ? WC()->cart->get_cart_contents_count() : 0 ); ?></span>
+						<span class="ma-cart-count"><?php echo esc_html( function_exists( 'WC' ) && WC()->cart ? WC()->cart->get_cart_contents_count() : 0 ); ?></span>
 					</a>
 				<?php endif; ?>
 			<?php else : ?>

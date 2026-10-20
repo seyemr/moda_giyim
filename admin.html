@@ -6,12 +6,12 @@
 	<meta name="theme-color" content="#f3f1eb">
 	<meta name="robots" content="noindex,nofollow">
 	<title>Yönetim demosu — Moda Chicago</title>
-	<link rel="stylesheet" href="assets/moda-demo.css">
-	<link rel="stylesheet" href="assets/moda-admin.css">
-	<script src="assets/moda-catalog.js" defer></script>
-	<script src="assets/moda-site-config.js" defer></script>
-	<script src="assets/moda-demo-utils.js" defer></script>
-	<script src="assets/moda-admin.js" defer></script>
+	<link rel="stylesheet" href="assets/moda-demo.css?v=2">
+	<link rel="stylesheet" href="assets/moda-admin.css?v=2">
+	<script src="assets/moda-catalog.js?v=2" defer></script>
+	<script src="assets/moda-site-config.js?v=2" defer></script>
+	<script src="assets/moda-demo-utils.js?v=2" defer></script>
+	<script src="assets/moda-admin.js?v=2" defer></script>
 </head>
 <body class="admin-body">
 	<a class="skip-link" href="#admin-main">İçeriğe geç</a>
@@ -136,7 +136,7 @@
 							<label>Footer: bilgi bağlantısı<input name="footerInfo" maxlength="30" required></label>
 							<label>Footer: yönetim giriş bağlantısı<input name="footerAdmin" maxlength="40" required></label>
 							<label>Footer: başa dön bağlantısı<input name="footerTop" maxlength="30" required></label>
-							<label>Chicago mavisi<input name="blue" type="color" required></label>
+							<label>Vurgu rengi<input name="blue" type="color" required></label>
 							<label>Chicago kırmızısı<input name="red" type="color" required></label>
 						</div>
 					</details>
@@ -197,19 +197,19 @@
 			<div class="form-grid">
 				<label class="field-full">Ürün adı<input id="product-name" name="name" type="text" maxlength="90" required></label>
 				<input id="product-style-id" name="styleId" type="hidden">
-				<label>Kategori<select id="product-category" name="category" required><option>Üst giyim</option><option>Alt giyim</option><option>Dış giyim</option><option>Aksesuar</option></select></label>
+				<label>Kategori<select id="product-category" name="category" required><option>Gömlek &amp; Tişört</option><option>Pantolon</option><option>Ceket &amp; Mont</option><option>Ayakkabı &amp; Aksesuar</option></select></label>
 				<label>Demo fiyat (₺)<input id="product-price" name="price" type="number" min="1" step="1" required></label>
 				<label>İndirim öncesi fiyat (isteğe bağlı)<input id="product-old-price" name="oldPrice" type="number" min="1" step="1"></label>
 				<label>Demo stok adedi<input id="product-stock" name="stock" type="number" min="0" step="1" required></label>
 				<label>Renk adı<input id="product-color" name="color" type="text" maxlength="40" required></label>
 				<label>Renk kodu<input id="product-color-hex" name="colorHex" type="color" value="#c7b9a5" required></label>
 				<label>Arka plan rengi<input id="product-bg" name="bg" type="color" value="#ded6c9" required></label>
-				<label class="field-full">Bedenler (virgülle ayır)<input id="product-sizes" name="sizes" type="text" placeholder="XS, S, M, L" required><small>Beden seçenekleri ortaktır; demo stok her renk varyantı için ayrı tutulur, beden bazında takip edilmez.</small></label>
+				<label class="field-full">Bedenler (virgülle ayır)<input id="product-sizes" name="sizes" type="text" placeholder="S, M, L, XL" required><small>Beden seçenekleri ortaktır; demo stok her renk varyantı için ayrı tutulur, beden bazında takip edilmez.</small></label>
 				<label class="field-full">Etiket (isteğe bağlı)<input id="product-badge" name="badge" type="text" maxlength="24" placeholder="YENİ"></label>
 				<div class="field-full image-upload-field">
 					<label for="product-images">Ürün fotoğrafları (en fazla 6)</label>
 					<input id="product-images" name="images" type="file" accept="image/jpeg,image/png,image/webp" multiple>
-					<small>JPG, PNG veya WebP · her dosya en fazla 8 MB. Farklı açılardan fotoğraf ekleyebilirsin; görseller küçültülüp bu tarayıcıda saklanır.</small>
+					<small>JPG, PNG veya WebP · kaynak dosya en fazla 20 MB. Görseller 1800 px ve 600 KB sınırına küçültülerek bu tarayıcıda saklanır.</small>
 					<div class="image-gallery-preview" id="image-gallery-preview" aria-live="polite"></div>
 				</div>
 			</div>

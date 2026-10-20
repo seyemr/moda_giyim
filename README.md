@@ -1,22 +1,107 @@
-# Moda Chicago WordPress teması
+# Moda Chicago erkek giyim mağazası
 
-Premium giyim mağazası için hazırlanmış, mobil uyumlu bir WordPress tema
+Modern erkek giyim mağazası için hazırlanmış, mobil uyumlu bir WordPress tema
 başlangıcıdır. Ürün listeleri, kategoriler, fiyatlar, indirimler, sepet/hesap
 bağlantıları ve ürün satın alma bağlantıları WooCommerce verilerini kullanır.
 Örnek sipariş, ödeme işleme, canlı sağlayıcı bilgileri veya kargo entegrasyonu
 eklenmemiştir.
 
+## Gerçek mağaza için WordPress sürümü
+
+Gerçek ürün, sepet, sipariş ve ödeme akışının temeli WordPress ve WooCommerce
+sürümüdür. Proje kökündeki `index.html` ve `admin.html`, yalnızca yerel
+JavaScript demosudur; canlı mağazaya dağıtmayın. WordPress çekirdeğini, bu
+projedeki `wp-admin`/`wp-includes` kopyalarını veya örnek/demo sayfalarını
+barındırma hesabınıza yüklemek yerine yalnızca tema ve yönetim eklentisi ZIP
+paketlerini kullanın.
+
+Tema ve eklenti için kurulabilir ZIP dosyalarını oluşturun:
+
+```sh
+sh scripts/package-wordpress-release.sh
+```
+
+Paketler `dist/moda-atelier.zip` ve `dist/moda-store-admin.zip` konumlarında
+oluşur. WordPress'te **Görünüm > Temalar > Yeni tema ekle > Tema yükle**
+bölümünden tema ZIP'ini, **Eklentiler > Yeni eklenti ekle > Eklenti yükle**
+bölümünden eklenti ZIP'ini yükleyin. Ardından WooCommerce'i WordPress eklenti
+dizininden kurup etkinleştirin. `dist/` içeriği dağıtım çıktısıdır; kaynak
+kontrolüne eklenmemelidir.
+
+Ana sayfa ve tema metinlerini **Görünüm > Özelleştir** ekranındaki **Ana sayfa
+hero alanı** ve **Site metinleri ve bölümler** bölümlerinden yönetin. Hero
+alanında üç slaytın başlık, açıklama, buton bağlantısı ve görseli değiştirilebilir;
+carousel 5 saniyede bir ilerler ve oklar, noktalar ya da duraklatma düğmesiyle
+kontrol edilir. Hareket tercihi azaltılmış cihazlarda otomatik oynatma kapalıdır.
+Aynı panelden kampanya, kategori, koleksiyon, favori ve bülten alanlarını
+gösterebilir/gizleyebilir; duyuru, marka rengi ve footer metinlerini
+düzenleyebilirsiniz. Logo ve site adı **Görünüm > Özelleştir > Site kimliği**,
+üst ve alt menüler ise **Görünüm > Menüler** bölümünden yönetilir. WordPress
+sayfalarının içerikleri sayfa düzenleyicisinde, WooCommerce ürünleri ve ürün
+kategorileri WooCommerce yönetiminde düzenlenir. Ana sayfa metin düzenleme
+seçenekleri tema özelleştirmesidir; sayfa/ürün verilerini değiştirmez.
+
+Moda Store Admin'in güncel sürümünde yöneticiler WordPress yönetimindeki
+**Moda Chicago** ekranından basit ve beden/renk seçenekli ürünleri arayabilir,
+ekleyebilir ve düzenleyebilir; fiyat, SKU, durum, kategori, görsel ve stok
+bilgilerini yönetebilir. Beden ve renk değerleri virgülle ayrılarak girilir;
+WooCommerce her kombinasyon için seçilebilir gerçek ürün varyasyonları
+oluşturur. Varyasyonların fiyatı ortaktır ve stok miktarı ürün düzeyinde
+paylaşılır. Diğer varyasyon özellikleri WooCommerce'in yerleşik ayrıntılı
+düzenleyicisinde yönetilir. Ürün formundan MP4 veya WebM video yüklenebilir;
+video ürün sayfasındaki görsel galerisinde oynatılır ve mevcut video formdan
+izlenip kaldırılabilir. Yükleme boyutu WordPress/hosting sunucusunun sınırına
+bağlıdır. Tema katalog görsellerini 720 px, ürün detay görsellerini 1200 px
+boyuta kadar sunar. Eklenti güncellemesi için yeni
+`dist/moda-store-admin.zip` paketini WordPress'ten yükleyin.
+
+WooCommerce'in **Hesabım** sayfası müşteri kayıt, e-posta ile giriş ve parola
+sıfırlama işlemlerini; oturum açtıktan sonra da sipariş, adres, hesap bilgisi
+ve çıkış bağlantılarını sunar. Müşteri üst menüdeki kişi simgesinden **Hesabım**
+sayfasına gidip e-posta ve parola belirleyerek kayıt olabilir; yeni kayıtların
+parola belirleme bağlantısı WooCommerce tarafından e-postayla gönderilir.
+Checkout sırasında hesap açma seçeneği de sunulur; istemeyen müşteri misafir
+olarak alışverişini tamamlayabilir. Bu site için misafir ödeme, ödeme sırasında
+isteğe bağlı hesap açma, Hesabım sayfasında kayıt ve parola belirleme e-postası
+ayarları etkinleştirilmiştir.
+
+Misafir müşteriler, sipariş onay e-postasındaki sipariş numarası ile ödeme
+sırasında kullandıkları fatura e-posta adresini [Sipariş Takibi](https://www.modamchicago.com/siparis-takibi/)
+sayfasında girerek sipariş durumunu görür. Sipariş numarası tek başına yeterli
+değildir; e-posta eşleştirmesi sipariş bilgilerinin başkalarınca görülmesini
+önlemeye yardımcı olur. Üye müşteriler giriş yaptıktan sonra **Hesabım >
+Siparişler** bölümünde sipariş ve durumlarını görür. Yönetici ve yetkili mağaza
+personeli müşteri/sipariş bilgilerini WordPress **WooCommerce > Siparişler** ve
+**WooCommerce > Müşteriler** ekranlarında yönetir. Ürün yönetimi için kullanılan
+Moda Chicago ekranı müşteri siparişlerinin yönetim alanı değildir.
+
+E-posta teslimatı için alan adı e-postasını ve SMTP teslimatını test edin;
+gizlilik politikasını müşteri verisi toplamaya göre güncelleyin.
+
+Bir staging sitesi için hosting hesabında ayrı bir veritabanı ve HTTPS adresi
+oluşturun; WordPress'i o ortama kurun, arama motoru indekslemesini kapatın ve
+test ortamını erişim korumasına alın. WooCommerce ayarlarında Türkiye/TRY
+başlangıcını, mağaza adresini, gönderim bölgelerini ve vergileri işletme
+bilgileriyle doğrulayın. Bu projede hosting, veritabanı, gerçek ürün kataloğu,
+onaylı hukuki metinler veya ödeme sağlayıcısı hesabı yoktur. Ürün ve işletme
+bilgileri tamamlanana, ödeme sağlayıcısının sandbox testi geçene kadar canlı
+ödeme yöntemlerini etkinleştirmeyin. Ayrıntılı kontrol listesi için
+[`docs/woocommerce-checkout.md`](docs/woocommerce-checkout.md) ve
+[`docs/prelaunch-test-plan.md`](docs/prelaunch-test-plan.md) dosyalarına bakın.
+
 ## PHP kullanmadan statik demo önizlemesi
 
 Proje kökündeki `index.html`, PHP/WordPress olmadan tarayıcıda açılabilen
-Moda Chicago'nun görsel dili Chicago şehir bayrağının gök mavisi ve kırmızı
-vurgularını, çelik tonlarını, güçlü tipografiyi ve şehir mimarisinden esinlenen
-grafik çizgileri kullanır. Aynı tasarım yaklaşımı WordPress temasına ve yönetim
-demo paneline de uygulanmıştır. Statik vitrinde ürün kartları, kategori kutuları,
-filtreler ve yönetim kartları daha yumuşak yüzeyler, belirgin odak durumları ve
-dar ekranlara göre ayarlanan boşluklarla sunulur.
+Moda Chicago'nun erkek giyim vitrini Chicago Bulls renklerinden esinlenen kırmızı,
+siyah ve beyaz paleti; şehir boğasını betimleyen özgün bir yan siluet; güçlü
+tipografi ve sade ürün sunumu kullanır. Resmî takım logosu veya maskotu
+kopyalanmamıştır. Aynı görsel yaklaşım WordPress temasına ve yönetim demo
+paneline de uygulanmıştır. Statik vitrinde ürün kartları, kategori kutuları,
+filtreler ve yönetim kartları belirgin odak durumları ve dar ekranlara göre
+ayarlanan boşluklarla sunulur.
 
-HTML/CSS/JavaScript demo mağazasıdır. Örnek katalogda arama, kategori/fiyat/stok
+HTML/CSS/JavaScript erkek giyim demo mağazasıdır. Örnek katalogdaki gömlek,
+tişört, pantolon, ceket ve aksesuar ürünlerinde arama, kategori/fiyat/stok
 filtreleri, sıralama, favoriler ve bu tarayıcıda saklanan demo sepeti çalışır.
 JavaScript veya tarayıcı depolaması kısıtlıysa sepet kalıcı olmayabilir.
 Ürün görseline tıklayınca ürün adı, kategori, fiyat, renk, beden seçenekleri ve
@@ -24,8 +109,8 @@ demo stok bilgisini gösteren ürün ayrıntı penceresi açılır. Yönetim dem
 ürüne renk varyantı ekleyebilir, her renk için altı adede kadar farklı açıdan
 fotoğraf yükleyebilir ve ürün penceresindeki galeriyle fotoğraflar arasında
 geçiş yapabilirsin. Her renk varyantının demo stoğu ayrı tutulur.
-Yüklenen fotoğraflar en fazla 1200 px uzun kenara ve 350 KB dosya boyutuna
-küçültülür; kaynak dosya sınırı 8 MB'tır. Katalog tarayıcı depolamasında kaldığı
+Yüklenen ürün fotoğrafları en fazla 1800 px uzun kenara ve 600 KB dosya boyutuna
+küçültülür; kaynak dosya sınırı 20 MB'tır. Katalog tarayıcı depolamasında kaldığı
 için kullanılabilir toplam alan tarayıcıya göre sınırlıdır.
 `admin.html` ürün kataloğunun yanında marka/SEO bilgilerini, duyuru ve menü
 metinlerini, ana sayfa hero/kategori/hikâye/bilgi alanlarını, bölüm
@@ -42,8 +127,9 @@ Mağaza sayfasının altındaki **Yönetim paneline giriş** bağlantısı `admi
 sayfasını açar. Bu, herkese açık demo bağlantısıdır; gerçek yönetim paneli
 olarak veya erişim güvenliği varmış gibi kullanılmamalıdır.
 Yönetim panelinden JPG, PNG veya WebP görseller seçilebilir; ürün görselleri
-en fazla 350 KB, site görselleri en fazla 250 KB olarak tarayıcıda küçültülür.
-Kaynak dosya sınırı 8 MB, uzun kenar sınırı 1200 pikseldir. Tarayıcı depolama
+en fazla 600 KB, site görselleri en fazla 250 KB olarak tarayıcıda küçültülür.
+Ürün görselinde kaynak dosya sınırı 20 MB, uzun kenar sınırı 1800 pikseldir.
+Site görsellerinde kaynak dosya sınırı 8 MB, uzun kenar sınırı 1200 pikseldir. Tarayıcı depolama
 sınırları nedeniyle küçük görseller kullanın.
 Tarayıcıda bozuk veya eski bir ürün kaydı varsa katalog gösterimi için geçersiz
 kayıtlar ayıklanır; ürün ve site ayarları forma uygulanırken renk, beden ve

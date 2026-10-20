@@ -29,8 +29,8 @@ function moda_atelier_setup() {
 	add_theme_support( 'responsive-embeds' );
 	add_theme_support( 'align-wide' );
 	add_theme_support( 'woocommerce', array(
-		'thumbnail_image_width' => 560,
-		'single_image_width'    => 900,
+		'thumbnail_image_width' => 720,
+		'single_image_width'    => 1200,
 		'product_grid'           => array(
 			'default_rows'    => 3,
 			'min_rows'        => 1,
@@ -64,8 +64,51 @@ function moda_atelier_enqueue_assets() {
 		$theme_version,
 		true
 	);
+	if ( is_front_page() ) {
+		wp_enqueue_script(
+			'moda-atelier-hero-carousel',
+			get_template_directory_uri() . '/assets/js/hero-carousel.js',
+			array(),
+			$theme_version,
+			true
+		);
+	}
+
+	$brand_color = sanitize_hex_color( get_theme_mod( 'moda_atelier_brand_color', '#ce1141' ) );
+	if ( ! $brand_color ) {
+		$brand_color = '#ce1141';
+	}
+	wp_add_inline_style( 'moda-atelier-style', ':root{--ma-blue:' . $brand_color . ';--ma-red:' . $brand_color . ';}' );
 }
 add_action( 'wp_enqueue_scripts', 'moda_atelier_enqueue_assets' );
+
+/**
+ * Render an uploaded product video inside the WooCommerce product gallery.
+ *
+ * @return void
+ */
+function moda_atelier_render_product_video() {
+	$product_id = get_the_ID();
+	$video_id   = absint( get_post_meta( $product_id, '_moda_store_product_video_id', true ) );
+	$mime_type  = $video_id ? get_post_mime_type( $video_id ) : '';
+	$video_url  = $video_id ? wp_get_attachment_url( $video_id ) : '';
+	if ( ! $video_url || ! in_array( $mime_type, array( 'video/mp4', 'video/webm' ), true ) ) {
+		return;
+	}
+
+	$image_id  = get_post_thumbnail_id( $product_id );
+	$poster    = $image_id ? wp_get_attachment_image_url( $image_id, 'woocommerce_single' ) : '';
+	?>
+	<div class="ma-product-video">
+		<video controls playsinline preload="metadata"<?php echo $poster ? ' poster="' . esc_url( $poster ) . '"' : ''; ?>>
+			<source src="<?php echo esc_url( $video_url ); ?>" type="<?php echo esc_attr( $mime_type ); ?>">
+			<?php esc_html_e( 'Tarayıcınız bu ürün videosunu oynatamıyor.', 'moda-atelier' ); ?>
+		</video>
+		<p><?php esc_html_e( 'Ürün videosu', 'moda-atelier' ); ?></p>
+	</div>
+	<?php
+}
+add_action( 'woocommerce_product_thumbnails', 'moda_atelier_render_product_video', 20 );
 
 /**
  * Register editable homepage hero copy.
@@ -82,22 +125,22 @@ function moda_atelier_customize_register( $wp_customize ) {
 	$fields = array(
 		'hero_eyebrow' => array(
 			'label'   => __( 'Hero üst metni', 'moda-atelier' ),
-			'default' => __( 'Yeni sezon', 'moda-atelier' ),
+			'default' => __( 'Chicago / Erkek koleksiyonu', 'moda-atelier' ),
 			'type'    => 'text',
 		),
 		'hero_title' => array(
 			'label'   => __( 'Hero başlığı', 'moda-atelier' ),
-			'default' => __( 'Giyilmek için tasarlandı. Uzun yıllar için üretildi.', 'moda-atelier' ),
+			'default' => __( 'Şehrin ritmi, senin stilin.', 'moda-atelier' ),
 			'type'    => 'text',
 		),
 		'hero_description' => array(
 			'label'   => __( 'Hero açıklaması', 'moda-atelier' ),
-			'default' => __( 'Özenle seçilmiş temel parçalar, nitelikli kumaşlar ve zamansız bir stil.', 'moda-atelier' ),
+			'default' => __( 'Günlük kombinlerden şehir akşamlarına. Tarzını tamamlayan modern erkek giyim parçalarını keşfet.', 'moda-atelier' ),
 			'type'    => 'textarea',
 		),
 		'hero_button_label' => array(
 			'label'   => __( 'Hero buton metni', 'moda-atelier' ),
-			'default' => __( 'Koleksiyonu keşfet', 'moda-atelier' ),
+			'default' => __( 'Yeni sezonu keşfet', 'moda-atelier' ),
 			'type'    => 'text',
 		),
 	);
@@ -149,16 +192,87 @@ function moda_atelier_customize_register( $wp_customize ) {
 		'campaign_one' => array(
 			'title'       => __( 'Kampanya 1', 'moda-atelier' ),
 			'image_label' => __( 'Kampanya 1 görseli', 'moda-atelier' ),
-			'headline'    => __( 'Günlük stil, yeniden yorumlandı.', 'moda-atelier' ),
-			'copy'        => __( 'Mevsimin öne çıkan parçalarını keşfedin.', 'moda-atelier' ),
+			'headline'    => __( 'Şehir stiline yeni bir yorum.', 'moda-atelier' ),
+			'copy'        => __( 'Erkek koleksiyonundaki yeni parçaları keşfet.', 'moda-atelier' ),
 		),
 		'campaign_two' => array(
 			'title'       => __( 'Kampanya 2', 'moda-atelier' ),
 			'image_label' => __( 'Kampanya 2 görseli', 'moda-atelier' ),
-			'headline'    => __( 'Gardırobun yeni favorileri.', 'moda-atelier' ),
-			'copy'        => __( 'Özenle seçilmiş zamansız parçalar.', 'moda-atelier' ),
+			'headline'    => __( 'Günün her anına hazır.', 'moda-atelier' ),
+			'copy'        => __( 'Günlük stilini tamamlayan seçili parçalar.', 'moda-atelier' ),
 		),
 	);
+
+	foreach ( array( 2, 3 ) as $slide_number ) {
+		$slide_defaults = 2 === $slide_number
+			? array(
+				'eyebrow'  => __( 'Günlük şehir stili', 'moda-atelier' ),
+				'title'    => __( 'Her ana eşlik eden parçalar.', 'moda-atelier' ),
+				'copy'     => __( 'Günlük giyimde konforu ve güçlü tasarımı bir araya getir.', 'moda-atelier' ),
+				'button'   => __( 'Koleksiyonu incele', 'moda-atelier' ),
+			)
+			: array(
+				'eyebrow'  => __( 'Yeni sezon seçkisi', 'moda-atelier' ),
+				'title'    => __( 'Tarzını yeni baştan kur.', 'moda-atelier' ),
+				'copy'     => __( 'Modern erkek gardırobuna özel yeni favorilerini keşfet.', 'moda-atelier' ),
+				'button'   => __( 'Tüm ürünleri gör', 'moda-atelier' ),
+			);
+		foreach ( $slide_defaults as $field => $default ) {
+			$field_labels = array(
+				'eyebrow' => __( 'Üst metin', 'moda-atelier' ),
+				'title'   => __( 'Başlık', 'moda-atelier' ),
+				'copy'    => __( 'Açıklama', 'moda-atelier' ),
+				'button'  => __( 'Buton metni', 'moda-atelier' ),
+			);
+			$setting_id = 'moda_atelier_hero_slide_' . $slide_number . '_' . $field;
+			$wp_customize->add_setting( $setting_id, array(
+				'default'           => $default,
+				'sanitize_callback' => 'sanitize_text_field',
+				'transport'         => 'refresh',
+			) );
+			$wp_customize->add_control( $setting_id, array(
+				'label'   => sprintf( __( 'Slayt %1$d: %2$s', 'moda-atelier' ), $slide_number, $field_labels[ $field ] ),
+				'section' => 'moda_atelier_homepage',
+				'type'    => 'text',
+			) );
+		}
+
+		$image_setting = 'moda_atelier_hero_slide_' . $slide_number . '_image';
+		$wp_customize->add_setting( $image_setting, array(
+			'default'           => 0,
+			'sanitize_callback' => 'absint',
+			'transport'         => 'refresh',
+		) );
+		$wp_customize->add_control( new WP_Customize_Media_Control( $wp_customize, $image_setting, array(
+			'label'     => sprintf( __( 'Slayt %d görseli', 'moda-atelier' ), $slide_number ),
+			'section'   => 'moda_atelier_homepage',
+			'mime_type' => 'image',
+		) ) );
+
+		$url_setting = 'moda_atelier_hero_slide_' . $slide_number . '_url';
+		$wp_customize->add_setting( $url_setting, array(
+			'default'           => '',
+			'sanitize_callback' => 'esc_url_raw',
+			'transport'         => 'refresh',
+		) );
+		$wp_customize->add_control( $url_setting, array(
+			'label'   => sprintf( __( 'Slayt %d buton bağlantısı', 'moda-atelier' ), $slide_number ),
+			'section' => 'moda_atelier_homepage',
+			'type'    => 'url',
+		) );
+	}
+
+	$wp_customize->add_setting( 'moda_atelier_hero_button_url', array(
+		'default'           => '',
+		'sanitize_callback' => 'esc_url_raw',
+		'transport'         => 'refresh',
+	) );
+	$wp_customize->add_control( 'moda_atelier_hero_button_url', array(
+		'label'       => __( 'Slayt 1 buton bağlantısı', 'moda-atelier' ),
+		'description' => __( 'Boş bırakılırsa mağaza sayfası açılır.', 'moda-atelier' ),
+		'section'     => 'moda_atelier_homepage',
+		'type'        => 'url',
+	) );
 
 	foreach ( $campaigns as $key => $campaign ) {
 		$wp_customize->add_setting( 'moda_atelier_' . $key . '_image', array(
@@ -203,6 +317,94 @@ function moda_atelier_customize_register( $wp_customize ) {
 			) );
 		}
 	}
+
+	$wp_customize->add_section( 'moda_atelier_site_content', array(
+		'title'       => __( 'Site metinleri ve bölümler', 'moda-atelier' ),
+		'description' => __( 'Ana sayfa, duyuru şeridi, koleksiyon başlıkları ve alt bilgi metinlerini buradan düzenleyin.', 'moda-atelier' ),
+		'priority'    => 36,
+	) );
+
+	$editable_fields = array(
+		'announcement' => array( __( 'Üst duyuru metni', 'moda-atelier' ), __( 'Yeni sezon yayında', 'moda-atelier' ), 'text' ),
+		'announcement_url' => array( __( 'Üst duyuru bağlantısı', 'moda-atelier' ), '', 'url' ),
+		'campaign_label' => array( __( 'Kampanya bölümü küçük başlığı', 'moda-atelier' ), __( 'Sezonun öne çıkanları', 'moda-atelier' ), 'text' ),
+		'campaign_link' => array( __( 'Kampanya bağlantı metni', 'moda-atelier' ), __( 'Keşfet', 'moda-atelier' ), 'text' ),
+		'category_eyebrow' => array( __( 'Kategori bölümü üst başlığı', 'moda-atelier' ), __( 'Erkek koleksiyonu', 'moda-atelier' ), 'text' ),
+		'category_title' => array( __( 'Kategori bölümü başlığı', 'moda-atelier' ), __( 'Stiline göre keşfet', 'moda-atelier' ), 'text' ),
+		'category_link' => array( __( 'Kategori bağlantı metni', 'moda-atelier' ), __( 'Tüm koleksiyon', 'moda-atelier' ), 'text' ),
+		'new_season_eyebrow' => array( __( 'Yeni sezon küçük başlığı', 'moda-atelier' ), __( 'Sizin için seçtiklerimiz', 'moda-atelier' ), 'text' ),
+		'new_season_title' => array( __( 'Yeni sezon bölüm başlığı', 'moda-atelier' ), __( 'Yeni sezon', 'moda-atelier' ), 'text' ),
+		'new_season_link' => array( __( 'Yeni sezon bağlantı metni', 'moda-atelier' ), __( 'Yeni gelenleri gör', 'moda-atelier' ), 'text' ),
+		'best_sellers_eyebrow' => array( __( 'Çok satanlar küçük başlığı', 'moda-atelier' ), __( 'Sizin için seçtiklerimiz', 'moda-atelier' ), 'text' ),
+		'best_sellers_title' => array( __( 'Çok satanlar bölüm başlığı', 'moda-atelier' ), __( 'Çok satanlar', 'moda-atelier' ), 'text' ),
+		'best_sellers_link' => array( __( 'Çok satanlar bağlantı metni', 'moda-atelier' ), __( 'Çok satanları gör', 'moda-atelier' ), 'text' ),
+		'sale_eyebrow' => array( __( 'İndirim bölümü küçük başlığı', 'moda-atelier' ), __( 'Sizin için seçtiklerimiz', 'moda-atelier' ), 'text' ),
+		'sale_title' => array( __( 'İndirim bölümü başlığı', 'moda-atelier' ), __( 'Sezon indirimi', 'moda-atelier' ), 'text' ),
+		'sale_link' => array( __( 'İndirim bağlantı metni', 'moda-atelier' ), __( 'İndirimli ürünleri gör', 'moda-atelier' ), 'text' ),
+		'favorites_eyebrow' => array( __( 'Favoriler küçük başlığı', 'moda-atelier' ), __( 'Sakladıkların', 'moda-atelier' ), 'text' ),
+		'favorites_title' => array( __( 'Favoriler bölüm başlığı', 'moda-atelier' ), __( 'Favorilerin', 'moda-atelier' ), 'text' ),
+		'favorites_feedback' => array( __( 'Favoriler bilgilendirme metni', 'moda-atelier' ), __( 'Favoriler bu tarayıcıda saklanır.', 'moda-atelier' ), 'text' ),
+		'favorites_empty' => array( __( 'Favori listesi boşken gösterilen metin', 'moda-atelier' ), __( 'Favori ürün eklemek için ürün kartındaki kalp simgesine dokunun.', 'moda-atelier' ), 'text' ),
+		'newsletter_eyebrow' => array( __( 'Bülten bölümü küçük başlığı', 'moda-atelier' ), __( 'Moda Chicago mektupları', 'moda-atelier' ), 'text' ),
+		'newsletter_title' => array( __( 'Bülten bölümü başlığı', 'moda-atelier' ), __( 'Şehrin enerjisi, her gün seninle.', 'moda-atelier' ), 'text' ),
+		'newsletter_copy' => array( __( 'Bülten bölümü açıklaması', 'moda-atelier' ), __( 'Moda Chicago erkek koleksiyonundaki yeni parçaları ve seçkileri keşfet.', 'moda-atelier' ), 'textarea' ),
+		'newsletter_button' => array( __( 'Bülten buton metni', 'moda-atelier' ), __( 'Bültene katıl', 'moda-atelier' ), 'text' ),
+		'footer_description' => array( __( 'Alt bilgi marka açıklaması', 'moda-atelier' ), __( 'Özenle seçilmiş kumaşlar ve her gün yeniden giymek isteyeceğiniz modern temel parçalar.', 'moda-atelier' ), 'textarea' ),
+		'footer_discover_title' => array( __( 'Alt bilgi keşfet başlığı', 'moda-atelier' ), __( 'Keşfet', 'moda-atelier' ), 'text' ),
+		'footer_service_title' => array( __( 'Alt bilgi müşteri hizmetleri başlığı', 'moda-atelier' ), __( 'Müşteri hizmetleri', 'moda-atelier' ), 'text' ),
+		'footer_legal' => array( __( 'Alt bilgi yasal kısa metni', 'moda-atelier' ), __( 'Tüm hakları saklıdır.', 'moda-atelier' ), 'text' ),
+		'footer_developer_credit' => array( __( 'Yazılım geliştirici kredisi', 'moda-atelier' ), __( 'Yazılım: Seyem Yazılım', 'moda-atelier' ), 'text' ),
+	);
+
+	foreach ( $editable_fields as $key => $definition ) {
+		$setting_id = 'moda_atelier_' . $key;
+		$wp_customize->add_setting( $setting_id, array(
+			'default'           => $definition[1],
+			'sanitize_callback' => 'url' === $definition[2]
+				? 'esc_url_raw'
+				: ( 'textarea' === $definition[2] ? 'sanitize_textarea_field' : 'sanitize_text_field' ),
+			'transport'         => 'refresh',
+		) );
+		$wp_customize->add_control( $setting_id, array(
+			'label'   => $definition[0],
+			'section' => 'moda_atelier_site_content',
+			'type'    => $definition[2],
+		) );
+	}
+
+	$wp_customize->add_setting( 'moda_atelier_brand_color', array(
+		'default'           => '#ce1141',
+		'sanitize_callback' => 'sanitize_hex_color',
+		'transport'         => 'refresh',
+	) );
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'moda_atelier_brand_color', array(
+		'label'   => __( 'Marka vurgu rengi', 'moda-atelier' ),
+		'section' => 'moda_atelier_site_content',
+	) ) );
+
+	$visibility_fields = array(
+		'show_announcement' => __( 'Üst duyuru şeridi', 'moda-atelier' ),
+		'show_campaigns'   => __( 'Kampanya kartları', 'moda-atelier' ),
+		'show_categories'  => __( 'Ürün kategorileri', 'moda-atelier' ),
+		'show_new_season'  => __( 'Yeni sezon ürünleri', 'moda-atelier' ),
+		'show_best_sellers' => __( 'Çok satan ürünler', 'moda-atelier' ),
+		'show_sale'        => __( 'İndirimli ürünler', 'moda-atelier' ),
+		'show_favorites'   => __( 'Favori ürünler', 'moda-atelier' ),
+		'show_newsletter'  => __( 'Bülten alanı', 'moda-atelier' ),
+	);
+	foreach ( $visibility_fields as $key => $label ) {
+		$setting_id = 'moda_atelier_' . $key;
+		$wp_customize->add_setting( $setting_id, array(
+			'default'           => true,
+			'sanitize_callback' => 'wp_validate_boolean',
+			'transport'         => 'refresh',
+		) );
+		$wp_customize->add_control( $setting_id, array(
+			'label'   => $label,
+			'section' => 'moda_atelier_site_content',
+			'type'    => 'checkbox',
+		) );
+	}
 }
 add_action( 'customize_register', 'moda_atelier_customize_register' );
 
@@ -229,7 +431,9 @@ function moda_atelier_get_attribute_taxonomy( $kind ) {
 
 		foreach ( $needles as $needle ) {
 			if ( false !== strpos( $slug, $needle ) || false !== strpos( $label, $needle ) ) {
-				$taxonomy = wc_attribute_taxonomy_name( $attribute->attribute_name );
+				$taxonomy = function_exists( 'wc_attribute_taxonomy_name' )
+					? wc_attribute_taxonomy_name( $attribute->attribute_name )
+					: 'pa_' . sanitize_title( $attribute->attribute_name );
 
 				if ( taxonomy_exists( $taxonomy ) ) {
 					return $taxonomy;
@@ -300,10 +504,9 @@ function moda_atelier_get_filter_term( $key, $taxonomy ) {
  * Add archive filters before WooCommerce runs the main product query.
  *
  * @param array    $meta_query Existing product meta query.
- * @param WC_Query $wc_query WooCommerce query wrapper.
  * @return array
  */
-function moda_atelier_filter_product_meta_query( $meta_query, $wc_query ) {
+function moda_atelier_filter_product_meta_query( $meta_query ) {
 	if ( is_admin() ) {
 		return $meta_query;
 	}
@@ -319,16 +522,15 @@ function moda_atelier_filter_product_meta_query( $meta_query, $wc_query ) {
 
 	return $meta_query;
 }
-add_filter( 'woocommerce_product_query_meta_query', 'moda_atelier_filter_product_meta_query', 20, 2 );
+add_filter( 'woocommerce_product_query_meta_query', 'moda_atelier_filter_product_meta_query', 20, 1 );
 
 /**
  * Add category, size, color and brand filters to WooCommerce product queries.
  *
  * @param array    $tax_query Existing product taxonomy query.
- * @param WC_Query $wc_query WooCommerce query wrapper.
  * @return array
  */
-function moda_atelier_filter_product_tax_query( $tax_query, $wc_query ) {
+function moda_atelier_filter_product_tax_query( $tax_query ) {
 	if ( is_admin() ) {
 		return $tax_query;
 	}
@@ -370,7 +572,7 @@ function moda_atelier_filter_product_tax_query( $tax_query, $wc_query ) {
 
 	return $tax_query;
 }
-add_filter( 'woocommerce_product_query_tax_query', 'moda_atelier_filter_product_tax_query', 20, 2 );
+add_filter( 'woocommerce_product_query_tax_query', 'moda_atelier_filter_product_tax_query', 20, 1 );
 
 /**
  * Render accessible, shareable WooCommerce archive filters.
@@ -403,14 +605,6 @@ function moda_atelier_render_archive_filters() {
 			'taxonomy' => $brand_taxonomy,
 		),
 	);
-	$has_filters = false;
-	foreach ( $taxonomies as $filter ) {
-		if ( $filter['taxonomy'] && taxonomy_exists( $filter['taxonomy'] ) ) {
-			$has_filters = true;
-			break;
-		}
-	}
-
 	$action_url = function_exists( 'is_product_category' ) && is_product_category()
 		? get_term_link( get_queried_object() )
 		: moda_atelier_shop_url();
@@ -421,7 +615,8 @@ function moda_atelier_render_archive_filters() {
 	$minimum = moda_atelier_get_filter_value( 'min_price' );
 	$maximum = moda_atelier_get_filter_value( 'max_price' );
 	$invalid_range = '' !== $minimum && '' !== $maximum && is_numeric( $minimum ) && is_numeric( $maximum ) && (float) $minimum > (float) $maximum;
-	$price_step   = number_format( pow( 10, -1 * wc_get_price_decimals() ), wc_get_price_decimals(), '.', '' );
+	$price_decimals = function_exists( 'wc_get_price_decimals' ) ? absint( wc_get_price_decimals() ) : 2;
+	$price_step     = number_format( pow( 10, -1 * $price_decimals ), $price_decimals, '.', '' );
 	$has_active_filter = '' !== $minimum || '' !== $maximum || '' !== moda_atelier_get_filter_value( 'stock_status' );
 	foreach ( array_keys( $taxonomies ) as $key ) {
 		$has_active_filter = $has_active_filter || '' !== moda_atelier_get_filter_value( $key );
@@ -438,7 +633,9 @@ function moda_atelier_render_archive_filters() {
 	</div>
 	<form class="ma-product-filters" id="ma-product-filters" method="get" action="<?php echo esc_url( $action_url ); ?>">
 		<?php
-		$ordering_options = wc_get_catalog_ordering_options();
+		$ordering_options = function_exists( 'wc_get_catalog_ordering_options' )
+			? wc_get_catalog_ordering_options()
+			: array();
 		$current_orderby  = moda_atelier_get_filter_value( 'orderby' );
 		if ( isset( $ordering_options[ $current_orderby ] ) ) :
 			?>
@@ -446,9 +643,7 @@ function moda_atelier_render_archive_filters() {
 		<?php endif; ?>
 		<div class="ma-filter-grid">
 			<?php foreach ( $taxonomies as $key => $filter ) : ?>
-				<?php if ( ! $filter['taxonomy'] || ! taxonomy_exists( $filter['taxonomy'] ) ) : ?>
-					<?php continue; ?>
-				<?php endif; ?>
+				<?php if ( $filter['taxonomy'] && taxonomy_exists( $filter['taxonomy'] ) ) : ?>
 				<?php
 				$terms = get_terms( array(
 					'taxonomy'   => $filter['taxonomy'],
@@ -456,10 +651,8 @@ function moda_atelier_render_archive_filters() {
 					'number'     => 150,
 					'orderby'    => 'name',
 				) );
-				if ( is_wp_error( $terms ) || ! $terms ) {
-					continue;
-				}
 				?>
+				<?php if ( ! is_wp_error( $terms ) && $terms ) : ?>
 				<div class="ma-filter-field">
 					<label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $filter['label'] ); ?></label>
 					<select id="<?php echo esc_attr( $key ); ?>" name="<?php echo esc_attr( $key ); ?>">
@@ -471,6 +664,8 @@ function moda_atelier_render_archive_filters() {
 						<?php endforeach; ?>
 					</select>
 				</div>
+				<?php endif; ?>
+				<?php endif; ?>
 			<?php endforeach; ?>
 
 			<div class="ma-filter-field ma-price-filter">
@@ -525,11 +720,11 @@ function moda_atelier_shop_url() {
 /**
  * Render a product card using WooCommerce product data.
  *
- * @param WC_Product $product Product to render.
+ * @param object $product Product to render.
  * @return void
  */
 function moda_atelier_render_product_card( $product ) {
-	if ( ! $product instanceof WC_Product ) {
+	if ( ! is_object( $product ) || ! is_a( $product, 'WC_Product' ) ) {
 		return;
 	}
 
@@ -611,17 +806,38 @@ function moda_atelier_primary_menu_fallback() {
 /**
  * Render a WooCommerce-driven product section.
  *
- * @param string $title Section title.
+ * @param string $section_key Editable homepage section key.
  * @param array  $query Product query arguments.
  * @param string $anchor Section anchor.
- * @param string $link_label Link text.
  * @return void
  */
-function moda_atelier_product_section( $title, $query, $anchor, $link_label ) {
+function moda_atelier_product_section( $section_key, $query, $anchor ) {
 	if ( ! function_exists( 'wc_get_products' ) ) {
 		return;
 	}
 
+	$section_defaults = array(
+		'new_season' => array(
+			'eyebrow' => __( 'Sizin için seçtiklerimiz', 'moda-atelier' ),
+			'title'   => __( 'Yeni sezon', 'moda-atelier' ),
+			'link'    => __( 'Yeni gelenleri gör', 'moda-atelier' ),
+		),
+		'best_sellers' => array(
+			'eyebrow' => __( 'Sizin için seçtiklerimiz', 'moda-atelier' ),
+			'title'   => __( 'Çok satanlar', 'moda-atelier' ),
+			'link'    => __( 'Çok satanları gör', 'moda-atelier' ),
+		),
+		'sale' => array(
+			'eyebrow' => __( 'Sizin için seçtiklerimiz', 'moda-atelier' ),
+			'title'   => __( 'Sezon indirimi', 'moda-atelier' ),
+			'link'    => __( 'İndirimli ürünleri gör', 'moda-atelier' ),
+		),
+	);
+	if ( ! isset( $section_defaults[ $section_key ] ) ) {
+		return;
+	}
+
+	$defaults = $section_defaults[ $section_key ];
 	$products = wc_get_products( array_merge(
 		array(
 			'status'  => 'publish',
@@ -635,10 +851,10 @@ function moda_atelier_product_section( $title, $query, $anchor, $link_label ) {
 		<div class="ma-container">
 			<div class="ma-section-heading">
 				<div>
-					<p class="ma-eyebrow"><?php esc_html_e( 'Sizin için seçtiklerimiz', 'moda-atelier' ); ?></p>
-					<h2><?php echo esc_html( $title ); ?></h2>
+					<p class="ma-eyebrow"><?php echo esc_html( get_theme_mod( 'moda_atelier_' . $section_key . '_eyebrow', $defaults['eyebrow'] ) ); ?></p>
+					<h2><?php echo esc_html( get_theme_mod( 'moda_atelier_' . $section_key . '_title', $defaults['title'] ) ); ?></h2>
 				</div>
-				<a class="ma-text-link" href="<?php echo esc_url( home_url( '/#' . $anchor ) ); ?>"><?php echo esc_html( $link_label ); ?></a>
+				<a class="ma-text-link" href="<?php echo esc_url( home_url( '/#' . $anchor ) ); ?>"><?php echo esc_html( get_theme_mod( 'moda_atelier_' . $section_key . '_link', $defaults['link'] ) ); ?></a>
 			</div>
 			<?php if ( $products ) : ?>
 				<div class="ma-product-grid">

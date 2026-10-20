@@ -1,10 +1,17 @@
 # Mağaza sahibinin yönetim paneli
 
-Moda Store Admin, WordPress yönetim menüsüne **Mağaza yönetimi** panosu ekler.
-Pano kendi başına ürün/sipariş verisi değiştirmez; mevcut WooCommerce
-ekranlarına bağlantı sağlar. Her kart ve bağlantı uygun WordPress/WooCommerce
-yeteneğiyle kontrol edilir. Bağlantıya doğrudan gidildiğinde hedef ekranın kendi
-WordPress/WooCommerce yetki kontrolleri de geçerlidir.
+Moda Store Admin, WordPress yönetim menüsüne **Moda Chicago** adında özel bir
+yönetici panosu ekler. Menü ve panel yalnızca `manage_options` yetkisine sahip
+site yöneticilerine açıktır. Erişim, WordPress'in kendi oturum açma ve parola
+korumasını kullanır; tema/eklenti içinde ayrı, ortak bir panel parolası
+saklanmaz.
+
+Basit ürünleri eklentinin aranabilir yönetim ekranından ekleyip düzenleyebilir;
+varyasyon, sipariş ve gelişmiş WooCommerce ayarlarını yerleşik ekranlarda
+yönetebilirsiniz. Değişiklikler WooCommerce ürün API'siyle veritabanına
+kaydedilir. Her işlem yetki, nonce ve sunucu tarafı doğrulamasıyla korunur.
+`admin.html` içindeki tarayıcı demosu ve `localStorage` verileri canlı mağazanın
+yönetim paneli değildir; bu veriler sunucuya aktarılmaz.
 
 ## Kurulum
 
@@ -12,7 +19,29 @@ WordPress/WooCommerce yetki kontrolleri de geçerlidir.
    `wp-content/plugins/` dizinine kopyalayın.
 2. **Eklentiler > Yüklü eklentiler** bölümünden **Moda Store Admin** eklentisini
    etkinleştirin. WooCommerce de etkin olmalıdır.
-3. Yönetim menüsündeki **Mağaza yönetimi** panosuna gidin.
+3. WordPress yönetim menüsündeki **Moda Chicago** panosuna gidin.
+
+ZIP ile güncellemek için yeni `moda-store-admin.zip` paketini **Eklentiler >
+Yeni eklenti ekle > Eklenti yükle** bölümünden yükleyin. WordPress eski sürümü
+değiştirme seçeneği sunarsa değişikliği onaylayın; sunmuyorsa yedek aldıktan
+sonra mevcut eklenti klasörünü FTP/hosting Dosya Yöneticisi üzerinden
+güncelleyin. Eklenti dosyalarını değiştirirken `wp-config.php` veya
+`wp-content/uploads` içeriğini silmeyin.
+
+Özel panelde yayındaki/taslak ürün ve sipariş sayısı, aranabilir ürün listesi,
+basit ve beden/renk varyasyonlu ürün formu, taslak/yayın durumu, fiyat, SKU,
+görsel, video, kategori ve stok alanları ile hızlı sipariş/mağaza ayarları
+bağlantıları bulunur. Beden ve renk seçenekleri virgülle ayrılarak girilir;
+WooCommerce her kombinasyon için gerçek varyasyon oluşturur. Varyasyon fiyatı
+ortaktır ve stok ürün düzeyinde paylaşılır. Başka varyasyon alanları veya farklı
+varyasyon fiyat/stokları WooCommerce'in ayrıntılı düzenleyicisinde yönetilir.
+Ürün videosu MP4/WebM olarak yüklenebilir; mevcut video formdan izlenip
+kaldırılabilir ve ürün sayfasının görsel galerisinde oynatılır. Görsel ve video
+yüklemeleri WordPress/hosting dosya boyutu sınırına tabidir; panel geçerli
+yükleme sınırını formda gösterir. Tema ürün kartlarında 720 px, ürün detayında
+1200 px genişliğe kadar görsel boyutları kullanır. Silme işlemi ürünü doğrudan
+kalıcı silmek yerine çöp kutusuna taşır. Ürün sayısı sıfırsa panel ödeme
+etkinleştirmeden önce ürün ve teslimat bilgilerini hazırlamanızı hatırlatır.
 
 Eklenti WP-CLI ile kurulabiliyorsa:
 
@@ -82,12 +111,16 @@ capability eklemez/değiştirmez.
 
 Staging'de ayrı test kullanıcılarıyla doğrulayın:
 
-- Shop Manager: izinli ürün, sipariş, kupon ve rapor kartlarını görür; kullanıcı,
-  eklenti ve site güvenlik ayarlarına erişemez.
+- Administrator: WordPress hesabı ve parolasıyla oturum açtıktan sonra
+  **Moda Chicago** panosunu görür; ürün/sipariş işlemleri WooCommerce'in yerel
+  ekranlarına gider.
+- Shop Manager: WooCommerce'in kendi yetki kurallarıyla izinli mağaza
+  ekranlarını kullanabilir, ancak `manage_options` yetkisi olmadığı için özel
+  **Moda Chicago** panosunu göremez ve doğrudan URL ile açamaz.
 - Ürün personeli (özelleştirilmiş rol): yalnızca ürün/kategori ekranları için
   gereken `edit_products` / `manage_product_terms` yetenekleri varsa o
   bağlantıları görür; sipariş/müşteri/kupon kartları görünmez.
-- Customer: **Mağaza yönetimi** panosuna erişemez.
+- Customer: **Moda Chicago** panosuna erişemez.
 - Yetkisiz kullanıcı, panonun URL'sini elle açmayı dener: WordPress erişimi
   reddeder. Her hedef WooCommerce ekranında da doğrudan erişim testi yapın.
 - Görsel personeli: `edit_theme_options` verilmemişse kampanya ayarlarına

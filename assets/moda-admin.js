@@ -12,9 +12,12 @@
 	const announcer = document.querySelector('#admin-announcer');
 	let products = loadProducts();
 	let selectedImages = [];
-	const maxImageBytes = 8 * 1024 * 1024;
-	const maxStoredImageBytes = 350 * 1024;
+	const maxImageBytes = 20 * 1024 * 1024;
+	const maxSiteImageBytes = 8 * 1024 * 1024;
+	const maxStoredImageBytes = 600 * 1024;
 	const maxProductImages = 6;
+	const maxProductImageDimension = 1800;
+	const maxSiteImageDimension = 1200;
 
 	function defaultProducts() {
 		return window.MODA_DEMO_PRODUCTS.map((product) => ({ ...product, sizes: [...product.sizes] }));
@@ -28,14 +31,14 @@
 			</div>`).join('');
 	}
 
-	function prepareImage(file, storedLimit = maxStoredImageBytes) {
+	function prepareImage(file, storedLimit = maxStoredImageBytes, sourceLimit = maxImageBytes, maxDimension = maxProductImageDimension) {
 		return new Promise((resolve, reject) => {
 			if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
 				reject(new Error('Yalnızca JPG, PNG veya WebP görsel yükleyebilirsin.'));
 				return;
 			}
-			if (file.size > maxImageBytes) {
-				reject(new Error('Görsel 8 MB sınırını aşıyor. Daha küçük bir dosya seç.'));
+			if (file.size > sourceLimit) {
+				reject(new Error(`Görsel ${Math.round(sourceLimit / (1024 * 1024))} MB sınırını aşıyor. Daha küçük bir dosya seç.`));
 				return;
 			}
 
@@ -45,7 +48,7 @@
 				const image = new Image();
 				image.onerror = () => reject(new Error('Seçilen dosya geçerli bir görsel olarak açılamadı.'));
 				image.onload = () => {
-					const scale = Math.min(1, 1200 / Math.max(image.naturalWidth, image.naturalHeight));
+					const scale = Math.min(1, maxDimension / Math.max(image.naturalWidth, image.naturalHeight));
 					const canvas = document.createElement('canvas');
 					canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
 					canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
@@ -163,7 +166,7 @@
 		document.querySelector('#admin-site-brand').textContent = `${config.brandName} ${config.brandSubtitle} / Mağaza`;
 		document.querySelector('.admin-topbar .brand').setAttribute('aria-label', `${config.brandName} ${config.brandSubtitle} yönetim paneli`);
 		document.title = `Yönetim demosu — ${config.brandName} ${config.brandSubtitle}`;
-		document.documentElement.style.setProperty('--chicago-blue', safeColor(config.blue, '#4aa8c8'));
+		document.documentElement.style.setProperty('--chicago-blue', safeColor(config.blue, '#ce1141'));
 		document.documentElement.style.setProperty('--chicago-red', safeColor(config.red, '#c7464f'));
 	}
 
@@ -176,7 +179,7 @@
 			const error = document.querySelector('#site-content-error');
 			error.hidden = true;
 			try {
-				pendingSiteImages[input.dataset.siteImage] = await prepareImage(file, siteImageLimit);
+				pendingSiteImages[input.dataset.siteImage] = await prepareImage(file, siteImageLimit, maxSiteImageBytes, maxSiteImageDimension);
 				const categoryMatch = input.dataset.siteImage.match(/^categoryImage([0-3])$/);
 				if (categoryMatch) siteConfig.categoryImages[Number(categoryMatch[1])] = pendingSiteImages[input.dataset.siteImage];
 				else siteConfig[input.dataset.siteImage] = pendingSiteImages[input.dataset.siteImage];
@@ -356,14 +359,14 @@
 		document.querySelector('#product-id').value = product && !isColorVariant ? product.id : '';
 		document.querySelector('#product-style-id').value = isColorVariant ? (product.styleId || product.id) : '';
 		document.querySelector('#product-name').value = product ? product.name : '';
-		document.querySelector('#product-category').value = product ? product.category : 'Üst giyim';
+		document.querySelector('#product-category').value = product ? product.category : window.MODA_SITE_DEFAULTS.categoryNames[0];
 		document.querySelector('#product-price').value = product ? product.price : '';
 		document.querySelector('#product-old-price').value = product && product.oldPrice ? product.oldPrice : '';
 		document.querySelector('#product-stock').value = product && !isColorVariant ? product.stock : 0;
 		document.querySelector('#product-color').value = product && !isColorVariant ? product.color : '';
 		document.querySelector('#product-color-hex').value = product ? product.colorHex : '#c7b9a5';
 		document.querySelector('#product-bg').value = product ? product.bg : '#ded6c9';
-		document.querySelector('#product-sizes').value = product ? product.sizes.join(', ') : 'XS, S, M, L';
+		document.querySelector('#product-sizes').value = product ? product.sizes.join(', ') : 'S, M, L, XL';
 		document.querySelector('#product-badge').value = product ? product.badge : '';
 		formDialog.showModal();
 		document.querySelector('#product-name').focus();
@@ -393,7 +396,7 @@
 			for (const file of files) preparedImages.push(await prepareImage(file));
 			selectedImages = [...selectedImages, ...preparedImages];
 			renderImagePreviews();
-			announce('Ürün fotoğrafları önizlemeye eklendi. Kaydettiğinde mağazada galeride görünür.');
+			announce('Yüksek çözünürlüklü ürün fotoğrafları önizlemeye eklendi. Kaydettiğinde mağazada galeride görünür.');
 		} catch (imageError) {
 			event.target.value = '';
 			error.textContent = imageError.message;

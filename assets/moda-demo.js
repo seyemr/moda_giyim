@@ -114,7 +114,7 @@
 		document.querySelectorAll('.brand[aria-label]').forEach((element) => { element.setAttribute('aria-label', `${config.brandName} ${config.brandSubtitle} ana sayfa`); });
 		document.title = config.siteTitle || `${config.brandName} ${config.brandSubtitle} — Zamansız parçalar`;
 		document.querySelector('meta[name="description"]').content = config.siteDescription || `${config.brandName} ${config.brandSubtitle} demo mağazası — ${config.heroDescription}`;
-		document.querySelector('meta[name="theme-color"]').content = safeColor(config.blue, '#4aa8c8');
+		document.querySelector('meta[name="theme-color"]').content = safeColor(config.blue, '#ce1141');
 		document.querySelectorAll('[data-site-nav]').forEach((element) => {
 			const key = { season: 'navSeason', categories: 'navCategories', story: 'navStory', favorites: 'navFavorites' }[element.dataset.siteNav];
 			if (key) element.textContent = config[key];
@@ -147,7 +147,11 @@
 		].forEach(([selector, value]) => setText(selector, value));
 		config.categoryNames.forEach((name, index) => setText(`[data-site-category="${index}"]`, name));
 		filters.category.querySelectorAll('option[data-site-category-option]').forEach((option, index) => {
+			option.value = config.categoryNames[index];
 			option.textContent = config.categoryNames[index];
+		});
+		document.querySelectorAll('[data-category-link]').forEach((link, index) => {
+			if (config.categoryNames[index]) link.dataset.categoryLink = config.categoryNames[index];
 		});
 		[
 			['#kategoriler', config.showCategories],
@@ -165,7 +169,7 @@
 			const key = element.dataset.siteFooterLink;
 			if (typeof config[key] === 'string') element.textContent = config[key];
 		});
-		document.documentElement.style.setProperty('--chicago-blue', safeColor(config.blue, '#4aa8c8'));
+		document.documentElement.style.setProperty('--chicago-blue', safeColor(config.blue, '#ce1141'));
 		document.documentElement.style.setProperty('--chicago-red', safeColor(config.red, '#c7464f'));
 		const targets = { '#koleksiyon': '#koleksiyon', '#kategoriler': '#kategoriler', '#hikaye': '#hikaye', '#demo-bilgi': '#demo-bilgi' };
 		document.querySelector('#site-hero-cta').setAttribute('href', targets[config.heroCtaTarget] || '#koleksiyon');
