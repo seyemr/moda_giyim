@@ -1,5 +1,7 @@
 # Moda Chicago erkek giyim mağazası
 
+https://www.modamchicago.com/
+
 Modern erkek giyim mağazası için hazırlanmış, mobil uyumlu bir WordPress tema
 başlangıcıdır. Ürün listeleri, kategoriler, fiyatlar, indirimler, sepet/hesap
 bağlantıları ve ürün satın alma bağlantıları WooCommerce verilerini kullanır.
