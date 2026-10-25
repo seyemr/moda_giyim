@@ -21,12 +21,43 @@ Tema ve eklenti için kurulabilir ZIP dosyalarını oluşturun:
 sh scripts/package-wordpress-release.sh
 ```
 
-Paketler `dist/moda-atelier.zip` ve `dist/moda-store-admin.zip` konumlarında
-oluşur. WordPress'te **Görünüm > Temalar > Yeni tema ekle > Tema yükle**
-bölümünden tema ZIP'ini, **Eklentiler > Yeni eklenti ekle > Eklenti yükle**
-bölümünden eklenti ZIP'ini yükleyin. Ardından WooCommerce'i WordPress eklenti
-dizininden kurup etkinleştirin. `dist/` içeriği dağıtım çıktısıdır; kaynak
-kontrolüne eklenmemelidir.
+Paketler `dist/moda-atelier.zip`, `dist/moda-store-admin.zip`,
+`dist/moda-pwa.zip`, `dist/moda-checkout-acceptance.zip`,
+`dist/moda-support.zip` ve `dist/moda-commerce-tools.zip` konumlarında oluşur.
+WordPress'te **Görünüm > Temalar > Yeni tema ekle > Tema yükle** bölümünden tema
+ZIP'ini; **Eklentiler > Yeni eklenti ekle > Eklenti yükle** bölümünden ihtiyaç
+duyulan eklenti ZIP'lerini yükleyin. Ardından WooCommerce'i WordPress eklenti
+dizininden kurup etkinleştirin. Checkout kabul eklentisi WooCommerce gerektirir.
+`dist/` içeriği dağıtım çıktısıdır; kaynak kontrolüne eklenmemelidir.
+
+`moda-support` eklentisi etkinleştirilince **Sıkça Sorulan Sorular**
+(`/sikca-sorulan-sorular/`) ve **Destek ve Talep Formu** (`/destek-talebi/`)
+sayfalarını oluşturur. Form; talep türü, iletişim bilgileri, sipariş numarası ve
+en fazla 3 görsel (JPG/PNG/WebP, 5 MB) kabul eder. Talepler yönetim panelinde
+**Destek Talepleri** altında saklanır, yöneticiye e-postayla bildirilir; talep
+kalıcı silindiğinde görselleri de silinir. SSS içeriği `moda_support_faqs`
+filtresiyle özelleştirilebilir.
+
+`moda-commerce-tools` WooCommerce mağaza araçları; müşteri hesabında sunucuya
+kaydedilen favorileri, ürün soru-cevap moderasyonunu, e-posta doğrulamalı stok
+ve hedef fiyat bildirimlerini, sipariş hesabındaki kargo takip alanlarını ve
+hesabından açıkça izin veren giriş yapmış müşteriler için her terk edilmiş
+sepet başına tek hatırlatmayı sunar.
+Destek talepleri **Hesabım > Destek taleplerim** bölümünde müşteriye özel
+gösterilir; ürün soruları mağaza yöneticisinin yanıtlaması için moderasyona
+alınır. Ürün bildirimi ve soru formlarında e-posta kullanımı için açık onay
+alınır; form gönderimleri temel bot önlemleriyle korunur. Beden rehberi
+**WooCommerce > Moda Mağaza Araçları** bölümünden hazırlanır; doğrulanmış
+ölçüler girilene kadar ürün sayfalarında tablo gösterilmez. Kargo firması
+entegrasyonu yoktur: siparişe takip numarası ve
+takip URL'si WooCommerce sipariş yönetiminden manuel kaydedilir.
+**WooCommerce > Moda Mağaza Araçları** altındaki ücretsiz kargo eşiği doluysa sepette
+bilgilendirme çubuğu gösterilir (WooCommerce kargo kuralıyla aynı tutarı girin);
+iade ve değişim notu doluysa ürün sayfasında gösterilir. İkisi de boşken görünmez. Hatırlatma
+zamanı WordPress zamanlayıcısına bağlıdır. Ürün
+yorumları WooCommerce'in yerleşik değerlendirme sistemiyle çalışır; yorum ve
+satın alma doğrulaması ayarlarını WooCommerce > Ayarlar > Ürünler bölümünden
+kontrol edin.
 
 Ana sayfa ve tema metinlerini **Görünüm > Özelleştir** ekranındaki **Ana sayfa
 hero alanı** ve **Site metinleri ve bölümler** bölümlerinden yönetin. Hero
@@ -57,13 +88,31 @@ boyuta kadar sunar. Eklenti güncellemesi için yeni
 
 WooCommerce'in **Hesabım** sayfası müşteri kayıt, e-posta ile giriş ve parola
 sıfırlama işlemlerini; oturum açtıktan sonra da sipariş, adres, hesap bilgisi
-ve çıkış bağlantılarını sunar. Müşteri üst menüdeki kişi simgesinden **Hesabım**
-sayfasına gidip e-posta ve parola belirleyerek kayıt olabilir; yeni kayıtların
-parola belirleme bağlantısı WooCommerce tarafından e-postayla gönderilir.
-Checkout sırasında hesap açma seçeneği de sunulur; istemeyen müşteri misafir
-olarak alışverişini tamamlayabilir. Bu site için misafir ödeme, ödeme sırasında
-isteğe bağlı hesap açma, Hesabım sayfasında kayıt ve parola belirleme e-postası
-ayarları etkinleştirilmiştir.
+ve çıkış bağlantılarını sunar. Yeni kayıt için WooCommerce otomatik güçlü bir
+parola üretir ve etkin **Yeni hesap** e-postasındaki parola belirleme bağlantısı
+müşterinin kendi parolasını kurmasını sağlar; parolalar ekranda veya açık
+metinle gösterilmez. Bu e-posta WooCommerce > Ayarlar > E-postalar bölümünde
+etkin olmalı ve SMTP teslimatı test edilmelidir. Checkout sırasında hesap açma
+seçeneği de sunulur; istemeyen müşteri misafir olarak alışverişini
+tamamlayabilir.
+
+Mobil uygulama kurulumu ve çevrimdışı bilgilendirme için Moda PWA eklentisini
+etkinleştirin. Manifest ve service worker adresleri HTTPS üzerinden site
+kökünde sunulur; web sunucusunun WordPress isteklerini bu adreslere yönlendirmesi
+gerekir. Tarayıcı destekliyorsa ziyaretçi uygulamayı ana ekrana ekleyebilir.
+Push bildirimleri isteğe bağlıdır; bunun için sunucuda OpenSSL, sitede HTTPS ve
+kullanıcının açık bildirim izni gerekir. Yönetici bildirim gönderimini WordPress
+kontrol panelindeki **Mobil Uygulama** ekranından yapar. Kurulumdan sonra
+manifesti, uygulama yükleme akışını ve çevrimdışı ekranı iOS Safari ve Android
+Chrome'da test edin.
+
+Checkout kabul eklentisi klasik checkout'ta ve WooCommerce Checkout Block'ta
+Mesafeli Satış Sözleşmesi/Ön Bilgilendirme kabulünü ve KVKK bilgilendirme
+onayını ayrı ayrı zorunlu tutar. Checkout Block alanları için WooCommerce 8.9
+veya üzeri gerekir; daha eski sürümlerde klasik checkout kullanın veya
+WooCommerce'i yükseltin. Eklentiyi etkinleştirmeden önce ilgili yasal sayfaları
+yayımlayıp checkout'ta test edin; KVKK kutusu pazarlama izni veya açık rıza
+yerine kullanılmamalıdır.
 
 Misafir müşteriler, sipariş onay e-postasındaki sipariş numarası ile ödeme
 sırasında kullandıkları fatura e-posta adresini [Sipariş Takibi](https://www.modamchicago.com/siparis-takibi/)

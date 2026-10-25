@@ -1,0 +1,61 @@
+.moda-pwa-bar {
+	position: fixed;
+	right: max(12px, env(safe-area-inset-right, 0px));
+	bottom: max(12px, env(safe-area-inset-bottom));
+	left: max(12px, env(safe-area-inset-left, 0px));
+	z-index: 90;
+	display: flex;
+	max-width: 520px;
+	align-items: center;
+	gap: 12px;
+	margin-inline: auto;
+	padding: 12px 14px;
+	border: 1px solid #3b292d;
+	border-radius: 12px;
+	background: #111010;
+	box-shadow: 0 10px 30px rgb(0 0 0 / 35%);
+	color: #f5f1f0;
+	font-size: 13px;
+	line-height: 1.4;
+}
+
+.moda-pwa-bar p {
+	flex: 1;
+	margin: 0;
+}
+
+.moda-pwa-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.moda-pwa-bar button {
+	min-height: 44px;
+	padding: 0 14px;
+	border: 1px solid #9b1c35;
+	border-radius: 6px;
+	background: #9b1c35;
+	color: #fff;
+	font: inherit;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.moda-pwa-bar button:hover {
+	background: #7c172c;
+}
+
+.moda-pwa-bar .moda-pwa-close {
+	min-width: 44px;
+	padding: 0;
+	border-color: #3b292d;
+	background: transparent;
+	font-size: 20px;
+}
+
+@media (max-width: 520px) {
+	.moda-pwa-bar {
+		flex-wrap: wrap;
+	}
+}

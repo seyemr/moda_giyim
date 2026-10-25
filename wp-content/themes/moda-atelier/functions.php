@@ -74,13 +74,109 @@ function moda_atelier_enqueue_assets() {
 		);
 	}
 
-	$brand_color = sanitize_hex_color( get_theme_mod( 'moda_atelier_brand_color', '#ce1141' ) );
+	if ( function_exists( 'is_product' ) && is_product() ) {
+		wp_enqueue_script(
+			'moda-atelier-sticky-cart',
+			get_template_directory_uri() . '/assets/js/sticky-cart.js',
+			array(),
+			$theme_version,
+			true
+		);
+	}
+
+	$brand_color = sanitize_hex_color( get_theme_mod( 'moda_atelier_brand_color', '#9b1c35' ) );
 	if ( ! $brand_color ) {
-		$brand_color = '#ce1141';
+		$brand_color = '#9b1c35';
+	}
+	if ( '#ce1141' === strtolower( $brand_color ) ) {
+		$brand_color = '#9b1c35';
+		set_theme_mod( 'moda_atelier_brand_color', $brand_color );
 	}
 	wp_add_inline_style( 'moda-atelier-style', ':root{--ma-blue:' . $brand_color . ';--ma-red:' . $brand_color . ';}' );
 }
 add_action( 'wp_enqueue_scripts', 'moda_atelier_enqueue_assets' );
+
+/**
+ * Print the mobile sticky add-to-cart bar on purchasable product pages.
+ *
+ * @return void
+ */
+function moda_atelier_render_sticky_cart() {
+	if ( ! function_exists( 'is_product' ) || ! is_product() ) {
+		return;
+	}
+	$product = wc_get_product( get_queried_object_id() );
+	if ( ! $product || ! $product->is_in_stock() || ! $product->is_type( array( 'simple', 'variable' ) ) ) {
+		return;
+	}
+	$label = $product->is_type( 'variable' ) ? __( 'Beden seç', 'moda-atelier' ) : __( 'Sepete ekle', 'moda-atelier' );
+	?>
+	<div class="ma-sticky-cart" aria-hidden="true">
+		<div class="ma-sticky-cart__info">
+			<span class="ma-sticky-cart__name"><?php echo esc_html( $product->get_name() ); ?></span>
+			<span class="ma-sticky-cart__price"><?php echo wp_kses_post( $product->get_price_html() ); ?></span>
+		</div>
+		<button type="button" class="ma-sticky-cart__button" tabindex="-1"><?php echo esc_html( $label ); ?></button>
+	</div>
+	<?php
+}
+add_action( 'wp_footer', 'moda_atelier_render_sticky_cart', 5 );
+
+/**
+ * Show the delivery time at the top of the shipping information page.
+ *
+ * @param string $content Page content.
+ * @return string
+ */
+function moda_atelier_delivery_time_notice( $content ) {
+	if ( is_admin() || ! is_page( 'teslimat-ve-kargo-bilgileri' ) || ! in_the_loop() || ! is_main_query() ) {
+		return $content;
+	}
+
+	$notice = '<h2>' . esc_html__( 'Teslimat süresi', 'moda-atelier' ) . '</h2><p>' . esc_html__( 'Ödeme onaylandıktan sonra siparişiniz 1–3 iş günü içinde PTT Kargo’ya teslim edilir. Gönderi, kargo takip bilgisi oluşturulduğunda sipariş numaranızla takip edilebilir. Adresinize ulaşma süresi PTT’nin dağıtım planına göre değişebilir.', 'moda-atelier' ) . '</p>';
+
+	return $notice . $content;
+}
+add_filter( 'the_content', 'moda_atelier_delivery_time_notice' );
+
+/**
+ * Force WooCommerce to use generated registration passwords.
+ *
+ * @return bool
+ */
+function moda_atelier_use_generated_registration_passwords() {
+	return true;
+}
+add_filter( 'woocommerce_registration_generate_password', 'moda_atelier_use_generated_registration_passwords' );
+
+/**
+ * Sanitize an international WhatsApp phone number to digits only.
+ *
+ * @param string $number Phone number, including country code.
+ * @return string
+ */
+function moda_atelier_sanitize_whatsapp_number( $number ) {
+	$digits = substr( preg_replace( '/\D+/', '', (string) $number ), 0, 15 );
+
+	return strlen( $digits ) >= 8 ? $digits : '';
+}
+
+/**
+ * Build the store's WhatsApp contact URL.
+ *
+ * @return string
+ */
+function moda_atelier_get_whatsapp_url() {
+	$number = moda_atelier_sanitize_whatsapp_number(
+		get_theme_mod( 'moda_atelier_whatsapp_number', '905061668911' )
+	);
+
+	if ( ! $number ) {
+		return '';
+	}
+
+	return 'https://wa.me/' . $number . '?text=' . rawurlencode( __( 'Merhaba Moda Chicago, ürünler hakkında bilgi almak istiyorum.', 'moda-atelier' ) );
+}
 
 /**
  * Render an uploaded product video inside the WooCommerce product gallery.
@@ -372,8 +468,20 @@ function moda_atelier_customize_register( $wp_customize ) {
 		) );
 	}
 
+	$wp_customize->add_setting( 'moda_atelier_whatsapp_number', array(
+		'default'           => '905061668911',
+		'sanitize_callback' => 'moda_atelier_sanitize_whatsapp_number',
+		'transport'         => 'refresh',
+	) );
+	$wp_customize->add_control( 'moda_atelier_whatsapp_number', array(
+		'label'       => __( 'WhatsApp iletişim numarası', 'moda-atelier' ),
+		'description' => __( 'Ülke koduyla, başında + olmadan girin. Örnek: 905xxxxxxxxx. Boş bırakırsanız WhatsApp bağlantısı gösterilmez.', 'moda-atelier' ),
+		'section'     => 'moda_atelier_site_content',
+		'type'        => 'tel',
+	) );
+
 	$wp_customize->add_setting( 'moda_atelier_brand_color', array(
-		'default'           => '#ce1141',
+		'default'           => '#9b1c35',
 		'sanitize_callback' => 'sanitize_hex_color',
 		'transport'         => 'refresh',
 	) );
@@ -869,3 +977,19 @@ function moda_atelier_product_section( $section_key, $query, $anchor ) {
 	</section>
 	<?php
 }
+
+/**
+ * Keep every cart counter (header and mobile bar) current after AJAX add-to-cart.
+ *
+ * @param array<string,string> $fragments Cart fragments.
+ * @return array<string,string>
+ */
+function moda_atelier_cart_count_fragment( $fragments ) {
+	$count = function_exists( 'WC' ) && WC()->cart ? WC()->cart->get_cart_contents_count() : 0;
+
+	$fragments['.ma-header-actions .ma-cart-count'] = '<span class="ma-cart-count">' . esc_html( (string) $count ) . '</span>';
+	$fragments['.ma-bottom-nav .ma-cart-count']     = '<span class="ma-cart-count ma-bottom-nav-badge">' . esc_html( (string) $count ) . '</span>';
+
+	return $fragments;
+}
+add_filter( 'woocommerce_add_to_cart_fragments', 'moda_atelier_cart_count_fragment' );

@@ -51,18 +51,31 @@ WordPress yönetiminde **WooCommerce > Ayarlar**:
    - SMTP/işlemsel e-posta sağlayıcısıyla sipariş e-postalarının gerçekten
      teslim edildiğini test edin; spam gelen kutusu ve teslimat günlüklerini
      kontrol edin.
+7. **Sözleşme ve KVKK bilgilendirmesi**
+   - Checkout'ta Mesafeli Satış Sözleşmesi ve Ön Bilgilendirme Formu için ayrı,
+     zorunlu kabul kutusu; Gizlilik/KVKK Aydınlatma Metni için ise ayrı bir
+     okudum/bilgilendirildim kutusu kullanın. İkinci kutu pazarlama izni veya
+     kişisel veri işlemeye yönelik açık rıza olarak sunulmamalıdır.
+   - Kutuların boş bırakılması hâlinde sipariş oluşturulmadığını ve onayların
+     sipariş kaydında saklandığını staging checkout'ta doğrulayın.
 
 WooCommerce sepet ve ödeme sayfalarının **WooCommerce > Ayarlar > Gelişmiş**
 altında atanmış, erişilebilir ve doğru sayfa içeriklerine sahip olduğunu
 doğrulayın. Checkout Block kullanılıyorsa seçilen ağ geçidinin blok ödeme
-uyumluluğunu ayrıca teyit edin; gerekirse uyumlu klasik checkout sayfasında
-staging testi yapın.
+uyumluluğunu ayrıca teyit edin; sözleşme/KVKK alan eklentisinin Block desteği
+için WooCommerce 8.9 veya üzeri gerekir. Daha eski sürümde güncelleyin ya da
+uyumlu klasik checkout sayfasında staging testi yapın.
 
 ### Müşteri kaydı ve sipariş takibi
 
 - Yeni müşteri üst menüdeki kişi simgesinden **Hesabım** sayfasına girer; kayıt
-  formunda e-posta ve parola kullanır. Checkout sırasında da hesap açma seçeneği
-  gösterilir. Hesap açmadan devam etmek isteyenler misafir checkout'u kullanır.
+  formunda e-posta adresini kullanır. WooCommerce parola üretir ve etkin yeni
+  hesap e-postasındaki güvenli parola oluşturma bağlantısını gönderir. Checkout
+  sırasında da hesap açma seçeneği gösterilir. Hesap açmadan devam etmek
+  isteyenler misafir checkout'u kullanır.
+- Kayıt, parola sıfırlama, sipariş, destek yanıtı ve ürün uyarı e-postalarını
+  SMTP üzerinden gerçek bir alıcıyla test edin. Teslimat başarısızsa canlı kayıt
+  veya bildirim akışını çalışır kabul etmeyin.
 - Üye müşteriler, giriş yaptıktan sonra **Hesabım > Siparişler** bölümünde
   sipariş geçmişini ve sipariş ayrıntı/durumunu görür.
 - Misafirler `/siparis-takibi/` adresinde sipariş numarası ve siparişin fatura

@@ -1,0 +1,466 @@
+.moda-faq,
+.moda-support {
+	max-width: 820px;
+	margin-inline: auto;
+	color: #111010;
+}
+
+.moda-faq-search input {
+	width: 100%;
+	min-height: 52px;
+	padding: 0 20px;
+	border: 1px solid #e5dfdc;
+	border-radius: 999px;
+	background: #fff;
+	font: inherit;
+	font-size: 15px;
+}
+
+.moda-faq-search input:focus,
+.moda-support-form input:focus,
+.moda-support-form textarea:focus {
+	border-color: #9b1c35;
+	box-shadow: 0 0 0 3px rgb(155 28 53 / 15%);
+	outline: 0;
+}
+
+.moda-faq-group {
+	margin-top: 32px;
+}
+
+.moda-faq-group h2 {
+	margin: 0 0 12px;
+	font-size: 12px;
+	letter-spacing: .14em;
+	text-transform: uppercase;
+	color: #9b1c35;
+}
+
+.moda-faq-item {
+	margin-bottom: 10px;
+	border: 1px solid #e5dfdc;
+	border-radius: 14px;
+	background: #fff;
+	transition: box-shadow .18s ease, border-color .18s ease;
+}
+
+.moda-faq-item[open] {
+	border-color: #9b1c35;
+	box-shadow: 0 8px 24px rgb(17 16 16 / 8%);
+}
+
+.moda-faq-item[hidden],
+.moda-faq-group[hidden] {
+	display: none;
+}
+
+.moda-faq-item summary {
+	display: flex;
+	min-height: 56px;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 12px 20px;
+	font-size: 15px;
+	font-weight: 600;
+	cursor: pointer;
+	list-style: none;
+}
+
+.moda-faq-item summary::-webkit-details-marker {
+	display: none;
+}
+
+.moda-faq-item summary::after {
+	display: grid;
+	width: 28px;
+	height: 28px;
+	flex: none;
+	place-items: center;
+	border-radius: 50%;
+	background: #f6f3f1;
+	content: "+";
+	font-size: 18px;
+	line-height: 1;
+	transition: transform .18s ease, background-color .18s ease, color .18s ease;
+}
+
+.moda-faq-item[open] summary::after {
+	background: #9b1c35;
+	color: #fff;
+	transform: rotate(45deg);
+}
+
+.moda-faq-answer {
+	padding: 0 20px 18px;
+	color: #4d4746;
+	font-size: 14px;
+	line-height: 1.75;
+}
+
+.moda-faq-answer p {
+	margin: 0;
+}
+
+.moda-faq-answer a {
+	color: #9b1c35;
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+.moda-faq-empty {
+	margin-top: 24px;
+	color: #6d6665;
+	text-align: center;
+}
+
+.moda-faq-cta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	margin-top: 36px;
+	padding: 22px 24px;
+	border-radius: 18px;
+	background: #111010;
+	color: #fff;
+}
+
+.moda-faq-cta div {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.moda-faq-cta span {
+	color: #c4c0b8;
+	font-size: 13px;
+}
+
+.moda-faq-cta a {
+	display: inline-flex;
+	min-height: 46px;
+	align-items: center;
+	padding: 0 22px;
+	border-radius: 999px;
+	background: #9b1c35;
+	color: #fff;
+	font-size: 13px;
+	font-weight: 600;
+	text-decoration: none;
+	transition: background-color .18s ease;
+}
+
+.moda-faq-cta a:hover {
+	background: #b3233f;
+}
+
+.moda-support-notice {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	margin-bottom: 24px;
+	padding: 16px 20px;
+	border-radius: 14px;
+	font-size: 14px;
+	line-height: 1.6;
+}
+
+.moda-support-notice.is-success {
+	border: 1px solid #b7dfc4;
+	background: #eefaf2;
+	color: #14532d;
+}
+
+.moda-support-notice.is-error {
+	border: 1px solid #f0c2c9;
+	background: #fdf1f3;
+	color: #8c1d2f;
+}
+
+.moda-support-form {
+	display: grid;
+	gap: 20px;
+	padding: 28px;
+	border: 1px solid #e5dfdc;
+	border-radius: 20px;
+	background: #fff;
+	box-shadow: 0 12px 40px rgb(17 16 16 / 6%);
+}
+
+.moda-support-form label,
+.moda-support-form legend,
+.moda-support-upload-title {
+	display: block;
+	margin-bottom: 6px;
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.moda-support-form abbr {
+	color: #9b1c35;
+	text-decoration: none;
+}
+
+.moda-support-form input[type="text"],
+.moda-support-form input[type="email"],
+.moda-support-form input[type="tel"],
+.moda-support-form textarea {
+	display: block;
+	width: 100%;
+	min-height: 48px;
+	padding: 12px 14px;
+	border: 1px solid #e5dfdc;
+	border-radius: 12px;
+	background: #fff;
+	font: inherit;
+	font-size: 14px;
+}
+
+.moda-support-form textarea {
+	resize: vertical;
+}
+
+.moda-support-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 16px;
+}
+
+.moda-support-types {
+	min-width: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.moda-support-types label {
+	display: inline-block;
+	margin: 0 8px 8px 0;
+}
+
+.moda-support-types input {
+	position: absolute;
+	opacity: 0;
+}
+
+.moda-support-types span {
+	display: inline-flex;
+	min-height: 40px;
+	align-items: center;
+	padding: 0 16px;
+	border: 1px solid #e5dfdc;
+	border-radius: 999px;
+	font-size: 13px;
+	font-weight: 500;
+	cursor: pointer;
+	transition: background-color .18s ease, color .18s ease, border-color .18s ease;
+}
+
+.moda-support-types input:checked + span {
+	border-color: #9b1c35;
+	background: #9b1c35;
+	color: #fff;
+}
+
+.moda-support-types input:focus-visible + span {
+	outline: 2px solid #9b1c35;
+	outline-offset: 2px;
+}
+
+.moda-support-upload-title small {
+	color: #6d6665;
+	font-weight: 400;
+}
+
+.moda-support-drop {
+	position: relative;
+	display: grid;
+	min-height: 96px;
+	place-items: center;
+	border: 2px dashed #d9cfcb;
+	border-radius: 14px;
+	background: #faf8f7;
+	color: #6d6665;
+	font-weight: 500;
+	text-align: center;
+	cursor: pointer;
+	transition: border-color .18s ease, background-color .18s ease;
+}
+
+.moda-support-drop:hover,
+.moda-support-drop:focus-within {
+	border-color: #9b1c35;
+	background: #fdf1f3;
+}
+
+.moda-support-drop input {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	cursor: pointer;
+}
+
+.moda-support-drop span::before {
+	display: block;
+	margin: 0 auto 6px;
+	color: #9b1c35;
+	content: "+";
+	font-size: 28px;
+	line-height: 1;
+}
+
+.moda-support-previews {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin: 12px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.moda-support-previews li {
+	position: relative;
+	width: 84px;
+	height: 84px;
+}
+
+.moda-support-previews img {
+	width: 100%;
+	height: 100%;
+	border-radius: 12px;
+	object-fit: cover;
+}
+
+.moda-support-previews button {
+	position: absolute;
+	top: -8px;
+	right: -8px;
+	width: 28px;
+	height: 28px;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: #111010;
+	color: #fff;
+	font-size: 16px;
+	line-height: 1;
+	cursor: pointer;
+}
+
+.moda-support-file-error {
+	margin: 8px 0 0;
+	color: #8c1d2f;
+	font-size: 12px;
+}
+
+.moda-support-consent {
+	display: flex !important;
+	align-items: flex-start;
+	gap: 10px;
+	font-weight: 400 !important;
+	line-height: 1.5;
+}
+
+.moda-support-consent input {
+	width: 20px;
+	height: 20px;
+	flex: none;
+	margin-top: 1px;
+	accent-color: #9b1c35;
+}
+
+.moda-support-consent a {
+	color: #9b1c35;
+	text-decoration: underline;
+}
+
+.moda-support-submit {
+	min-height: 52px;
+	border: 0;
+	border-radius: 999px;
+	background: #9b1c35;
+	color: #fff;
+	font: inherit;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background-color .18s ease, transform .18s ease;
+}
+
+.moda-support-submit:hover:not(:disabled) {
+	background: #b3233f;
+	transform: translateY(-1px);
+}
+
+.moda-support-submit:disabled {
+	opacity: .6;
+	cursor: wait;
+}
+
+.moda-support-hp {
+	position: absolute;
+	left: -9999px;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+}
+
+@media (max-width: 640px) {
+	.moda-support-form {
+		padding: 18px;
+	}
+
+	.moda-support-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.moda-faq-cta {
+		flex-direction: column;
+		align-items: stretch;
+		text-align: center;
+	}
+
+	.moda-faq-cta a {
+		justify-content: center;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.moda-faq-item,
+	.moda-faq-item summary::after,
+	.moda-support-submit,
+	.moda-support-drop,
+	.moda-support-types span {
+		transition: none;
+	}
+}
+.moda-support-account-list {
+	display: grid;
+	gap: 1rem;
+}
+
+.moda-support-account-list > article {
+	padding: 1.1rem;
+	border: 1px solid #e5dfdc;
+	border-radius: 16px;
+	background: #fff;
+}
+
+.moda-support-account-list h3 {
+	margin-top: 0;
+}
+
+.moda-support-account-reply {
+	margin-top: 1rem;
+	padding: .9rem;
+	border-left: 3px solid #9b1c35;
+	background: #f6f3f1;
+}
+
+.moda-support-account-reply p {
+	margin-bottom: 0;
+}
