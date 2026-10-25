@@ -113,8 +113,8 @@ $whatsapp_url = moda_atelier_get_whatsapp_url();
 		<div class="ma-footer-bottom">
 			<span>&copy; <?php echo esc_html( wp_date( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?></span>
 			<span><?php echo esc_html( get_theme_mod( 'moda_atelier_footer_legal', __( 'Tüm hakları saklıdır.', 'moda-atelier' ) ) ); ?></span>
-			<span class="ma-footer-credit"><?php echo esc_html( get_theme_mod( 'moda_atelier_footer_developer_credit', __( 'Yazılım: Seyem Yazılım', 'moda-atelier' ) ) ); ?></span>
 		</div>
+		<p class="ma-footer-credit"><?php echo esc_html( get_theme_mod( 'moda_atelier_footer_developer_credit', __( 'Yazılım: Seydi EMRE', 'moda-atelier' ) ) ); ?></p>
 	</div>
 </footer>
 <?php if ( $whatsapp_url ) : ?>

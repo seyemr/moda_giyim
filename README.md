@@ -23,7 +23,7 @@ sh scripts/package-wordpress-release.sh
 
 Paketler `dist/moda-atelier.zip`, `dist/moda-store-admin.zip`,
 `dist/moda-pwa.zip`, `dist/moda-checkout-acceptance.zip`,
-`dist/moda-support.zip` ve `dist/moda-commerce-tools.zip` konumlarında oluşur.
+`dist/moda-support.zip`, `dist/moda-commerce-tools.zip` ve `dist/moda-instagram-top.zip` konumlarında oluşur.
 WordPress'te **Görünüm > Temalar > Yeni tema ekle > Tema yükle** bölümünden tema
 ZIP'ini; **Eklentiler > Yeni eklenti ekle > Eklenti yükle** bölümünden ihtiyaç
 duyulan eklenti ZIP'lerini yükleyin. Ardından WooCommerce'i WordPress eklenti
@@ -291,3 +291,12 @@ Yayına çıkış öncesi uçtan uca senaryolar, beklenen sonuçlar, hata giderm
 yayın kabul kapısı için [yayın öncesi test planını](./docs/prelaunch-test-plan.md)
 izleyin.
 # moda_giyim
+
+## Instagram Vitrini
+
+`moda-instagram-top` eklentisi Instagram Graph API ile business/creator hesabın son
+paylaşımlarını okur; en çok görüntülenen (veya en çok etkileşim alan) paylaşımı
+ana sayfada gösterir. WooCommerce > Instagram Vitrini sayfasından erişim anahtarı
+(token) girilir; veri 6 saatte bir yenilenir, anahtar aylık otomatik uzatılır.
+Instagram tek tek tıklama sayısı vermez; ölçüt görüntülenme veya etkileşimdir.
+Erişim anahtarı depoya veya sohbete yazılmaz, yalnızca yönetim ayarına girilir.

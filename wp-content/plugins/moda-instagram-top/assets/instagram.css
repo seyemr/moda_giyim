@@ -1,0 +1,81 @@
+.moda-ig-top-card {
+	display: grid;
+	overflow: hidden;
+	border: 1px solid rgba(0, 0, 0, .08);
+	border-radius: 20px;
+	background: #fff;
+	box-shadow: 0 14px 40px rgba(34, 20, 24, .08);
+}
+
+.moda-ig-top-media {
+	display: block;
+	aspect-ratio: 1 / 1;
+	background: #eee;
+}
+
+.moda-ig-top-media img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.moda-ig-top-body {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+	gap: 12px;
+	padding: 24px;
+}
+
+.moda-ig-top-body h2 {
+	margin: 0;
+}
+
+.moda-ig-top-caption {
+	margin: 0;
+	color: #5c5a55;
+	overflow-wrap: anywhere;
+}
+
+.moda-ig-top-stats {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.moda-ig-top-stats li {
+	padding: 6px 12px;
+	border-radius: 999px;
+	background: #f6ecee;
+	color: #7a2a3a;
+	font-size: 13px;
+	font-weight: 600;
+}
+
+.moda-ig-top-link {
+	display: inline-flex;
+	min-height: 44px;
+	align-items: center;
+	gap: 8px;
+	padding: 0 20px;
+	border-radius: 999px;
+	background: #1d1718;
+	color: #fff;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+@media (min-width: 783px) {
+	.moda-ig-top-card {
+		grid-template-columns: minmax(0, 380px) minmax(0, 1fr);
+	}
+
+	.moda-ig-top-body {
+		padding: 40px;
+	}
+}

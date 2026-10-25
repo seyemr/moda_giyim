@@ -1,7 +1,7 @@
 /*
 Theme Name: Moda Chicago
 Description: Modern, responsive WooCommerce theme for a premium menswear store.
-Version: 1.13.1
+Version: 1.14.4
 Requires at least: 6.4
 Requires PHP: 8.0
 Text Domain: moda-atelier
@@ -3175,8 +3175,19 @@ body.woocommerce-account .woocommerce form .button:focus-visible {
 }
 
 .ma-footer-credit {
-	color: #d58a99;
-	letter-spacing: .04em;
+	margin: 0;
+	padding: 10px 0 calc(4px + env(safe-area-inset-bottom, 0px));
+	color: #8a847b;
+	font-size: 11px;
+	font-weight: 400;
+	letter-spacing: .06em;
+	text-align: center;
+}
+
+@media (max-width: 782px) {
+	.ma-footer-credit {
+		padding-bottom: 80px;
+	}
 }
 
 .ma-whatsapp-float {

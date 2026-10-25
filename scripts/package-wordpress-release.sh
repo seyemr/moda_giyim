@@ -26,7 +26,9 @@ for source in \
 	"$project_root/wp-content/plugins/moda-support/assets/support.css" \
 	"$project_root/wp-content/plugins/moda-commerce-tools/moda-commerce-tools.php" \
 	"$project_root/wp-content/plugins/moda-commerce-tools/assets/commerce.js" \
-	"$project_root/wp-content/plugins/moda-commerce-tools/assets/commerce.css"
+	"$project_root/wp-content/plugins/moda-commerce-tools/assets/commerce.css" \
+	"$project_root/wp-content/plugins/moda-instagram-top/moda-instagram-top.php" \
+	"$project_root/wp-content/plugins/moda-instagram-top/assets/instagram.css"
 do
 	if [ ! -f "$source" ]; then
 		printf 'Error: required WordPress release source file is missing: %s\n' "$source" >&2
@@ -42,7 +44,7 @@ rm -f "$release_dir"/moda-*.zip
 	zip -qr "$release_dir/moda-atelier.zip" moda-atelier
 )
 
-for plugin in moda-store-admin moda-pwa moda-checkout-acceptance moda-support moda-commerce-tools
+for plugin in moda-store-admin moda-pwa moda-checkout-acceptance moda-support moda-commerce-tools moda-instagram-top
 do
 	(
 		cd "$project_root/wp-content/plugins"

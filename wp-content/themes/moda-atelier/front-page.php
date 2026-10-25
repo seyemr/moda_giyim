@@ -220,6 +220,8 @@ foreach ( array( 2, 3 ) as $slide_number ) {
 		</section>
 	<?php endif; ?>
 
+	<?php do_action( 'moda_atelier_after_products' ); ?>
+
 	<?php if ( get_theme_mod( 'moda_atelier_show_newsletter', true ) ) : ?>
 	<section class="ma-newsletter">
 		<div class="ma-container ma-newsletter-inner">
